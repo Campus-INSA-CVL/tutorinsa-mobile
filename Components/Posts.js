@@ -3,13 +3,14 @@ import { StyleSheet, View, Text } from 'react-native';
 
 class Posts extends React.Component {
   static navigationOptions = {
-      headerShown: false,
+      title: "Posts",
+      headerShown: true,
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Testtt</Text>
+        <Text>Test</Text>
       </View>
     );
   }

@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Linking } from 'react-native';
 import { Input } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
 import Separator from './Separator';
+import ExternalLink from './ExternalLink';
 
 
 class LoginScreen extends React.Component {
@@ -61,10 +62,10 @@ class LoginScreen extends React.Component {
             <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Login</Text>
           </TouchableOpacity>
           <Separator/>
-          <View style={{paddingBottom: 20}}>
-            <Text style={styles.link}>Mot de passe oublié ?</Text>
-            <Text style={styles.link}>Créer un compte !</Text>
-            <Text style={styles.link}>Politique RGPD</Text>
+          <View style={{paddingBottom: 20, alignItems: 'center'}}>
+            <ExternalLink value="Mot de passe oublié ?" url="https://www.tutorinsa.insa-cvl.org/forgot-password"/>
+            <ExternalLink value="Créer un compte !" url="https://www.tutorinsa.insa-cvl.org/register"/>
+            <ExternalLink value="Politique RGPD" url="https://www.tutorinsa.insa-cvl.org/politique%20de%20confidentialit%C3%A9.pdf"/>
           </View>
         </View>
       </LinearGradient>
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     backgroundColor: '#374dc0',
+    paddingTop: 20,
   },
   header: {
     flex: 0.5,
@@ -110,10 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#4e73df',
     paddingHorizontal: 10,
   },
-  link: {
-    alignSelf: 'center',
-    color: 'blue',
-  }
 });
 
 export default LoginScreen
