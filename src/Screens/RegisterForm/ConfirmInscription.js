@@ -16,7 +16,7 @@ class ConfirmInscription extends React.Component {
         </View>
         <TouchableOpacity
           style={{backgroundColor: '#4e73df', ...styles.nextButton}}
-          onPress={() => {this.props.route.params.onRegisterSuccess()}}
+          onPress={() => {this.props.route.params.stackNav.navigate("Login")}}
         >
           <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Se connecter</Text>
         </TouchableOpacity>

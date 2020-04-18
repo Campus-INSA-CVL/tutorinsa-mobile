@@ -9,7 +9,7 @@ import RegisterScreen from '../Screens/RegisterScreen'
 
 const Stack = createStackNavigator();
 
-class AuthStackNavigation extends React.Component {
+class AuthStackNavigation extends React.Component {  
   render() {
     return (
       <NavigationContainer>

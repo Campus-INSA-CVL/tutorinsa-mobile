@@ -69,7 +69,7 @@ class RegisterNavigation extends React.Component {
               ...SlideFromRightTransition,
               gestureEnabled: false,
             }}
-            initialParams={{onRegisterSuccess: this.props.onRegisterSuccess}}
+            initialParams={{stackNav: this.props.stackNav}}
             component={ConfirmInscription}
           />
           <Stack.Screen name="Error"

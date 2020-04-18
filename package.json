@@ -29,6 +29,8 @@
     "react-native-screens": "^2.0.0-alpha.29",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {

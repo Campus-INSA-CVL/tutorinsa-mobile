@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Animated, Easing, Dimensions, Image, Alert } from 'react-native';
+import { connect } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import client from '../feathers-client';
 
@@ -21,7 +22,7 @@ class LoadingScreen extends React.Component {
 
     client.reAuthenticate().then(() => {
       this.setState({loadingFinished: true});
-      this.props.onAuthSuccess();
+      this.props.dispatch({ type: "AUTH_TRUE"});
       this.syncAnimAndLoading();
     }).catch((e)=>{
       this.setState({loadingFinished: true});
@@ -62,4 +63,4 @@ class LoadingScreen extends React.Component {
   }
 }
 
-export default LoadingScreen
+export default connect(() => {return {}})(LoadingScreen)

@@ -18,7 +18,7 @@ class RegisterScreen extends React.Component {
       >
         <View style={styles.content}>
           <Text style={{alignSelf: 'center', fontSize:30, paddingTop:25, paddingBottom: 10}}>Créer un compte</Text>
-          <RegisterNavigation onRegisterSuccess={() => {this.props.navigation.navigate("Login")}}/>
+          <RegisterNavigation stackNav={this.props.navigation}/>
           <Separator backgroundColor='#d1d3e2'/>
           <View style={{paddingBottom: 10, alignItems: 'center'}}>
             <InternalLink label="J'ai déjà un compte !" target="Login" navigation={this.props.navigation}/>

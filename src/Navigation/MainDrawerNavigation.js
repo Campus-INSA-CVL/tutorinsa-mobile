@@ -12,8 +12,22 @@ class MainDrawerNavigation extends React.Component {
     return (
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Posts">
-          <Drawer.Screen name="Posts" component={Posts} />
-          <Drawer.Screen name="Mon profil" component={Profile} />
+          <Drawer.Screen
+            name="Posts"
+            options={{
+              title: "Posts",
+              headerShown: true,
+            }}
+            component={Posts}
+          />
+          <Drawer.Screen
+            name="Profile"
+            options={{
+              title: "Mon profil",
+              headerShown: true,
+            }}
+            component={Profile}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     );

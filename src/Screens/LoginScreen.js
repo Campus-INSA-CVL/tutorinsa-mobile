@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
 import { Input } from 'react-native-elements';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,9 +10,10 @@ import InternalLink from '../Components/InternalLink';
 import client, { handleErrors } from '../feathers-client';
 
 class LoginScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { email: '', password: '', isLoading: false };
+  state = { email: '', password: '', isLoading: false };
+
+  componentDidMount() {
+    this.props.dispatch({ type: 'SET_AUTH_NAVIGATION', value: () => {this.props.navigation}});
   }
 
   submit(state) {
@@ -21,7 +23,7 @@ class LoginScreen extends React.Component {
       password: state.password,
     }).then(() => {
       this.setState({ isLoading: false })
-      this.props.route.params.onLoginSuccess()
+      this.props.dispatch({ type: "AUTH_TRUE"});
     }).catch(e => {
       this.setState({ isLoading: false, password: '' })
       handleErrors(e)
@@ -145,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen
+export default connect(() => {return {}})(LoginScreen)
