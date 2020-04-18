@@ -3,13 +3,16 @@ import Icon from 'react-native-vector-icons/Feather';
 import { TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FadeTransition } from './Transitions';
+import { SlideFromRightTransition } from './Transitions';
 
 import NameForm from '../Screens/RegisterForm/NameForm';
 import EmailPassForm from '../Screens/RegisterForm/EmailPassForm';
 import ConfirmPassForm from '../Screens/RegisterForm/ConfirmPassForm';
 import InformationsForm from '../Screens/RegisterForm/InformationsForm';
-import BlankScreen from '../Screens/BlankScreen';
+import FavoriteSubjectsForm from '../Screens/RegisterForm/FavoriteSubjectsForm';
+import DifficultSubjectsForm from '../Screens/RegisterForm/DifficultSubjectsForm';
+import ConfirmInscription from '../Screens/RegisterForm/ConfirmInscription';
+import ErrorInscription from '../Screens/RegisterForm/ErrorInscription';
 
 const Stack = createStackNavigator();
 
@@ -21,46 +24,61 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="Name"
             options={{
               headerShown: false,
-              ...FadeTransition,
+              ...SlideFromRightTransition,
             }}
             component={NameForm}
           />
           <Stack.Screen name="Informations"
           options={{
             headerShown: false,
-            ...FadeTransition,
+            ...SlideFromRightTransition,
           }}
           component={InformationsForm}
+          />
+          <Stack.Screen name="FavoriteSubjects"
+          options={{
+            headerShown: false,
+            ...SlideFromRightTransition,
+          }}
+          component={FavoriteSubjectsForm}
+          />
+          <Stack.Screen name="DifficultSubjects"
+          options={{
+            headerShown: false,
+            ...SlideFromRightTransition,
+          }}
+          component={DifficultSubjectsForm}
           />
           <Stack.Screen name="EmailPass"
           options={{
             headerShown: false,
-            ...FadeTransition,
+            ...SlideFromRightTransition,
           }}
           component={EmailPassForm}
           />
           <Stack.Screen name="ConfirmPass"
             options={{
               headerShown: false,
-              gestureEnabled: true,
-              ...FadeTransition,
+              ...SlideFromRightTransition,
             }}
             component={ConfirmPassForm}
           />
           <Stack.Screen name="ConfirmInscription"
             options={{
               headerShown: false,
-              gestureEnabled: true,
-              ...FadeTransition,
+              ...SlideFromRightTransition,
+              gestureEnabled: false,
             }}
-            component={BlankScreen}
+            initialParams={{onRegisterSuccess: this.props.onRegisterSuccess}}
+            component={ConfirmInscription}
           />
           <Stack.Screen name="Error"
             options={{
               headerShown: false,
-              ...FadeTransition,
+              ...SlideFromRightTransition,
+              gestureEnabled: false,
             }}
-            component={BlankScreen}
+            component={ErrorInscription}
           />
         </Stack.Navigator>
       </NavigationContainer>

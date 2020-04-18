@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4e73df',
   },
   unchecked: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#d1d3e2',
   }
 });
 
