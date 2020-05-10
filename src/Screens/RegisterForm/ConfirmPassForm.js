@@ -7,6 +7,7 @@ import client from '../../feathers-client';
 class NameForm extends React.Component {
   state={
     confirmPassword: '',
+    passwordError: false,
   }
 
   render() {
@@ -19,7 +20,7 @@ class NameForm extends React.Component {
             errorMessage={this.state.confirmPassword=='' || this.state.confirmPassword==this.props.route.params.password ? '' : 'Cela ne correspond pas au mot de passe précédent'}
             onChangeText={(val) => this.setState({ confirmPassword: val })}
             onSubmitEditing={() => {
-              if (this.state.confirmPassword==this.props.route.params.password) {
+              if (this.state.confirmPassword=='' || this.state.confirmPassword==this.props.route.params.password) {
                 client.service('users').create({
 	                 "email": this.props.route.params.email,
 	                 "password": this.props.route.params.password,
@@ -62,7 +63,7 @@ class NameForm extends React.Component {
             disabled={this.state.confirmPassword!=this.props.route.params.password}
             style={{backgroundColor: (this.state.confirmPassword==this.props.route.params.password) ? '#4e73df' : '#d1d3e2', ...styles.nextButton}}
             onPress={() => {
-              if (this.state.confirmPassword==this.props.route.params.password) {
+              if (this.state.confirmPassword=='' || this.state.confirmPassword==this.props.route.params.password) {
                 client.service('users').create({
 	                 "email": this.props.route.params.email,
 	                 "password": this.props.route.params.password,

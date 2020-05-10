@@ -1,5 +1,8 @@
 
-const initialState = { auth_success: false, authStackNavigation: null };
+const initialState = {
+  auth_success: false,
+  authStackNavigation: null
+};
 
 function authFunctions(state = initialState, action) {
   switch (action.type) {

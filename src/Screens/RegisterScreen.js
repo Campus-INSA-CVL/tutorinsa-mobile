@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Input } from 'react-native-elements';
@@ -9,6 +10,11 @@ import RegisterNavigation from '../Navigation/RegisterNavigation';
 
 class RegisterScreen extends React.Component {
   render() {
+    if (this.props.register_complete) {
+      this.props.dispatch({ type: "REGISTER_RESET" });
+      this.props.navigation.navigate("Login");
+    }
+
     return (
       <LinearGradient
         style={styles.container}
@@ -18,7 +24,7 @@ class RegisterScreen extends React.Component {
       >
         <View style={styles.content}>
           <Text style={{alignSelf: 'center', fontSize:30, paddingTop:25, paddingBottom: 10}}>Créer un compte</Text>
-          <RegisterNavigation stackNav={this.props.navigation}/>
+          <RegisterNavigation/>
           <Separator backgroundColor='#d1d3e2'/>
           <View style={{paddingBottom: 10, alignItems: 'center'}}>
             <InternalLink label="J'ai déjà un compte !" target="Login" navigation={this.props.navigation}/>
@@ -61,4 +67,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen
+const mapStateToProps = (store) => {
+  return { register_complete: store.authFunctions.register_complete }
+}
+
+export default connect(mapStateToProps)(RegisterScreen)

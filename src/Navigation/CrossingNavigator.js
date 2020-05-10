@@ -20,13 +20,14 @@ class CrossingNavigator extends React.Component {
       return(<MainDrawerNavigation/>)
     }
     else {
+      console.log("auth_success is "+this.props.auth_success);
       return(<AuthStackNavigation/>)
     }
   }
 }
 
 const mapStateToProps = (store) => {
-  return { auth_success: store.auth_success}
+  return { auth_success: store.authFunctions.auth_success}
 }
 
 export default connect(mapStateToProps)(CrossingNavigator)

@@ -15,7 +15,7 @@ client.configure(socketio(socket))
 export default client
 
 export function handleErrors(e) {
-  console.log(e.name);
+  console.log('Error catched : '+e.name);
   if (e.name == "Timeout") {
     Alert.alert(
       'Erreur',

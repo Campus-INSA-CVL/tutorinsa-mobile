@@ -24,6 +24,7 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="Name"
             options={{
               headerShown: false,
+              gestureEnabled: true,
               ...SlideFromRightTransition,
             }}
             component={NameForm}
@@ -31,6 +32,7 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="Informations"
           options={{
             headerShown: false,
+            gestureEnabled: true,
             ...SlideFromRightTransition,
           }}
           component={InformationsForm}
@@ -38,6 +40,7 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="FavoriteSubjects"
           options={{
             headerShown: false,
+            gestureEnabled: true,
             ...SlideFromRightTransition,
           }}
           component={FavoriteSubjectsForm}
@@ -45,6 +48,7 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="DifficultSubjects"
           options={{
             headerShown: false,
+            gestureEnabled: true,
             ...SlideFromRightTransition,
           }}
           component={DifficultSubjectsForm}
@@ -52,6 +56,7 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="EmailPass"
           options={{
             headerShown: false,
+            gestureEnabled: true,
             ...SlideFromRightTransition,
           }}
           component={EmailPassForm}
@@ -59,6 +64,7 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="ConfirmPass"
             options={{
               headerShown: false,
+              gestureEnabled: true,
               ...SlideFromRightTransition,
             }}
             component={ConfirmPassForm}
@@ -66,17 +72,16 @@ class RegisterNavigation extends React.Component {
           <Stack.Screen name="ConfirmInscription"
             options={{
               headerShown: false,
-              ...SlideFromRightTransition,
               gestureEnabled: false,
+              ...SlideFromRightTransition,
             }}
-            initialParams={{stackNav: this.props.stackNav}}
             component={ConfirmInscription}
           />
           <Stack.Screen name="Error"
             options={{
               headerShown: false,
-              ...SlideFromRightTransition,
               gestureEnabled: false,
+              ...SlideFromRightTransition,
             }}
             component={ErrorInscription}
           />

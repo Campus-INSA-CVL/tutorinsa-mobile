@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Input } from 'react-native-elements';
 import Dots from '../../Components/Dots';
 import client from '../../feathers-client';
+import { connect } from 'react-redux';
 import { MaterialIcons as Icon } from '@expo/vector-icons'
 
 class ConfirmInscription extends React.Component {
@@ -16,7 +17,7 @@ class ConfirmInscription extends React.Component {
         </View>
         <TouchableOpacity
           style={{backgroundColor: '#4e73df', ...styles.nextButton}}
-          onPress={() => {this.props.route.params.stackNav.navigate("Login")}}
+          onPress={() => {this.props.dispatch({ type: "REGISTER_COMPLETE" })}}
         >
           <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Se connecter</Text>
         </TouchableOpacity>
@@ -38,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConfirmInscription
+export default connect(() => {return {}})(ConfirmInscription)

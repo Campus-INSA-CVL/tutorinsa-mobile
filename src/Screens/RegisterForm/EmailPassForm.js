@@ -6,7 +6,16 @@ import Dots from '../../Components/Dots';
 class EmailPassForm extends React.Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    emailError: false,
+    passwordError: false,
+  }
+
+  checkEmailPassSpec() {
+    let emailOk = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@insa-cvl\.fr$/.test(this.state.email)
+    let passwordOk = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(this.state.password)
+    this.setState({emailError: !emailOk, passwordError: !passwordOk});
+    return emailOk && passwordOk
   }
 
   render() {
@@ -22,6 +31,7 @@ class EmailPassForm extends React.Component {
             returnKeyType="next"
             inputContainerStyle={styles.inputContainer}
             placeholder="Entrez votre email"
+            errorMessage={this.state.emailError ? 'Ce n\'est pas une adresse email insa-cvl.fr valide.' : ''}
             placeholderTextColor={'#aaa'}
             keyboardType='email-address'
           />
@@ -30,7 +40,7 @@ class EmailPassForm extends React.Component {
             ref={(input) => {this.passInput = input}}
             onChangeText={(val) => this.setState({ password: val })}
             onSubmitEditing={() => {
-              if (this.state.email!='' && this.state.password!='') {
+              if (this.state.email!='' && this.state.password!='' && this.checkEmailPassSpec()) {
                 this.props.navigation.navigate("ConfirmPass", {
                   firstName: this.props.route.params.firstName,
                   lastName: this.props.route.params.lastName,
@@ -47,6 +57,7 @@ class EmailPassForm extends React.Component {
             secureTextEntry
             inputContainerStyle={styles.inputContainer}
             placeholder="Mot de passe"
+            errorMessage={this.state.passwordError ? 'Le mot de passe doit respecter les règles suivantes :\n - 8 caractères minimum\n - 1 lettre majuscule minimum\n - 1 lettre minuscule minimum\n - 1 chiffre minimum\n - 1 caractère spécial minimum' : ''}
             placeholderTextColor={'#aaa'}
             returnKeyType="done"
           />
@@ -56,7 +67,7 @@ class EmailPassForm extends React.Component {
             disabled={this.state.email=='' || this.state.password==''}
             style={{backgroundColor: (this.state.email!='' && this.state.password!='') ? '#4e73df' : '#d1d3e2', ...styles.nextButton}}
             onPress={() => {
-              if (this.state.email!='' && this.state.password!='') {
+              if (this.state.email!='' && this.state.password!='' && this.checkEmailPassSpec()) {
                 this.props.navigation.navigate("ConfirmPass", {
                   firstName: this.props.route.params.firstName,
                   lastName: this.props.route.params.lastName,

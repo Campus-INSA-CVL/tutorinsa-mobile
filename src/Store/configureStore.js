@@ -1,4 +1,8 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import authFunctions from './Reducers/authReducer'
+import apiFunctions from './Reducers/apiReducer'
 
-export default createStore(authFunctions)
+export default createStore(combineReducers({
+  authFunctions,
+  apiFunctions
+}))

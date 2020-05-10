@@ -1,29 +1,31 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native';
-import Separator from './Separator'
+import Separator from './Separator';
+import { AntDesign as Icon } from '@expo/vector-icons'
+import moment from 'moment';
 
 class Announce extends React.Component {
   render() {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', flex: 1, borderRadius: 6, backgroundColor: this.props.item.type=='eleve' ? '#1cc88a' : '#4e73df', justifyContent: 'flex-end', marginRight: 10}}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{this.props.item.matiere}</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{this.props.item.subject.name}</Text>
           </View>
           <Separator backgroundColor='#000'/>
-          <View style={{flexDirection: 'row', flex:1}}>
-            <View style={styles.left}>
-              <Text style={{fontSize: 18}}>{this.props.item.date}</Text>
-              <Text style={{fontSize: 15}}>{this.props.item.debut} - {this.props.item.fin}</Text>
-            </View>
-            <View style={styles.right}>
-              {// <View style={{backgroundColor: this.props.item.type=='tuteur' ? '#4e73df' : '#1cc88a', width: '90%', padding: 2, paddingLeft: 5, borderRadius: 10}}>
-              //   <Text style={{color: 'white'}}>{this.props.item.type=='tuteur' ? 'Offre d\'un tuteur' : 'Demande d\'un étudiant'}</Text>
-              // </View>
-            }
-              <Text style={{paddingRight: 15, alignSelf: 'flex-end'}}>{this.props.item.auteur}</Text>
-            </View>
+          <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
+            <Icon name='calendar' color={this.props.item.type=='eleve' ? '#1cc88a' : '#4e73df'} size={25}/>
+            <Text style={{fontSize: 18}}> {moment(this.props.item.date).local().format('dddd LL')}</Text>
           </View>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Icon name='clockcircleo' color={this.props.item.type=='eleve' ? '#1cc88a' : '#4e73df'} size={25}/>
+            <Text style={{fontSize: 18}}> {moment(this.props.item.date).local().format('LT')} - {moment(this.props.item.endAt).local().format('LT')}</Text>
+          </View>
+          {
+            // <View style={{backgroundColor: this.props.item.type=='tuteur' ? '#4e73df' : '#1cc88a', width: '90%', padding: 2, paddingLeft: 5, borderRadius: 10}}>
+            //   <Text style={{color: 'white'}}>{this.props.item.type=='tuteur' ? 'Offre d\'un tuteur' : 'Demande d\'un étudiant'}</Text>
+            // </View>
+          }
         </View>
       </View>
     );
@@ -32,11 +34,9 @@ class Announce extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    width: "98%",
     alignSelf: 'center',
-    backgroundColor: '#4e73df',
-    borderRadius: 6,
-    width: '100%',
+    backgroundColor: '#e8e8e8',
     padding: 10,
   },
   header: {

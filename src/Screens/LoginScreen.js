@@ -23,7 +23,8 @@ class LoginScreen extends React.Component {
       password: state.password,
     }).then(() => {
       this.setState({ isLoading: false })
-      this.props.dispatch({ type: "AUTH_TRUE"});
+      this.props.dispatch({ type: "AUTH_TRUE" });
+      this.props.dispatch({ type: "API_USER", value: res.user });
     }).catch(e => {
       this.setState({ isLoading: false, password: '' })
       handleErrors(e)

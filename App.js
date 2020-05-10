@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, View, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import ErrorBoundary from './src/Components/ErrorBoundary';
 import Store from './src/Store/configureStore';

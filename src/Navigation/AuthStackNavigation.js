@@ -9,7 +9,7 @@ import RegisterScreen from '../Screens/RegisterScreen'
 
 const Stack = createStackNavigator();
 
-class AuthStackNavigation extends React.Component {  
+class AuthStackNavigation extends React.Component {
   render() {
     return (
       <NavigationContainer>
@@ -20,7 +20,11 @@ class AuthStackNavigation extends React.Component {
             component={LoginScreen}
           />
           <Stack.Screen name="Register"
-            options={{headerShown: false}}
+            options={{
+              headerShown: false,
+              gestureDirection: 'vertical',
+              gestureEnabled: true,
+            }}
             component={RegisterScreen}
           />
         </Stack.Navigator>

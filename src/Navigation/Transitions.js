@@ -39,7 +39,6 @@ export const FadeTransition = {
 
 export const SlideFromRightTransition = {
   gestureDirection: 'horizontal',
-  gestureEnabled: true,
    transitionSpec: {
      open: {
        animation: 'spring',

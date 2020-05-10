@@ -38,18 +38,18 @@ class InformationsForm extends React.Component {
 
   componentDidMount() {
     client.service('departments').find()
-          .then((e) => {
+          .then((data) => {
             this.setState({
-              departmentsData: e.data,
+              departmentsData: data,
               isLoadingDepartments: false
-            })
+            });
           })
           .catch(handleErrors);
 
     client.service('years').find()
-          .then((e) => {
+          .then((data) => {
             this.setState({
-              yearsData: e.data,
+              yearsData: data,
               isLoadingYears: false
             });
           })
@@ -73,10 +73,12 @@ class InformationsForm extends React.Component {
         <View style={{borderWidth: 0.5, borderRadius: 5}}>
           <Text style={{alignSelf: 'center', fontSize:20, paddingVertical:5, fontWeight: 'bold'}}>Vous êtes</Text>
           <View style={{flexDirection: 'row'}}>
-            <Icon name='account-circle' color='#b7b9cc' size={100}/>
+            <View style={{ height: 100, width: 100 }}>
+              <Icon name='account-circle' color='#b7b9cc' size={100}/>
+            </View>
             <View style={{flex:1}}>
               <Picker
-                mode='dropdown'
+                mode='dialog'
                 style={{flex: 1}}
                 selectedValue={this.state.role}
                 onValueChange={(itemValue, itemIndex) => {

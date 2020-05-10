@@ -4,7 +4,6 @@ import { Input, CheckBox } from 'react-native-elements';
 import Dots from '../../Components/Dots';
 import LoadingWheel from '../../Components/LoadingWheel';
 import client, { handleErrors } from '../../feathers-client';
-import { MaterialIcons as Icon } from '@expo/vector-icons';
 
 class DifficultSubjectsForm extends React.Component {
   state={
@@ -15,9 +14,9 @@ class DifficultSubjectsForm extends React.Component {
 
   componentDidMount() {
     client.service('subjects').find()
-          .then((e) => {
+          .then((data) => {
             this.setState({
-              subjectsData: e.data,
+              subjectsData: data,
               isLoadingSubjects: false
             });
           })
@@ -35,7 +34,7 @@ class DifficultSubjectsForm extends React.Component {
             <CheckBox
               title={item.name}
               iconRight
-              checkedIcon=<View style={{height: 31}}/> //<Icon name='check' color='#4e73df' size={30}/>
+              checkedIcon=<View style={{height: 31}}/>
               uncheckedIcon=<View style={{height: 31}}/>
               containerStyle={{backgroundColor: this.state.difficultSubjects.includes(item._id) ? '#b0c4ff' : '#fafafa'}}
               onPress={() => {
