@@ -3,7 +3,7 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import Announce from '../Components/Announce';
 import NavBar from '../Components/NavBar';
 import LoadingWheel from '../Components/LoadingWheel';
-import client, { handleErrors } from '../feathers-client';
+import client, { handleAllErrors } from '../feathers-client';
 
 /*
 {
@@ -46,7 +46,7 @@ class Posts extends React.Component {
               postsData: res.data,
             });
           })
-          .catch(handleErrors);
+          .catch(handleAllErrors);
   }
 
   render() {
@@ -69,7 +69,7 @@ class Posts extends React.Component {
                           })
                           .catch((e) => {
                             this.setState({refreshing: false})
-                            handleErrors(e)
+                            handleAllErrors(e)
                           });
                   }}
                   data={this.state.postsData}
