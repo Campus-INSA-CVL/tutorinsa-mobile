@@ -3,10 +3,9 @@ import { StyleSheet, View, TouchableOpacity, Text, Picker } from 'react-native';
 import { Input } from 'react-native-elements';
 import Dots from '../../Components/Dots';
 import LoadingWheel from '../../Components/LoadingWheel';
-import client, { handleErrors } from '../../feathers-client';
+import client from '../../feathers-client';
+import { connect } from 'react-redux';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
-
-
 
 class InformationsForm extends React.Component {
   state={
@@ -15,10 +14,6 @@ class InformationsForm extends React.Component {
       {'_id': 'tuteur', 'name': 'Un tuteur'},
       {'_id': 'both', 'name': 'Les deux'}
     ],
-    departmentsData: [{"_id": '', "name": "Chargement..."}],
-    yearsData: [{"_id": '', "name": "Chargement..."}],
-    isLoadingDepartments: true,
-    isLoadingYears: true,
     year: '',
     department: '',
     role: 'etudiant',
@@ -36,26 +31,6 @@ class InformationsForm extends React.Component {
     }
   }
 
-  componentDidMount() {
-    client.service('departments').find()
-          .then((data) => {
-            this.setState({
-              departmentsData: data,
-              isLoadingDepartments: false
-            });
-          })
-          .catch(handleErrors);
-
-    client.service('years').find()
-          .then((data) => {
-            this.setState({
-              yearsData: data,
-              isLoadingYears: false
-            });
-          })
-          .catch(handleErrors);
-  }
-
   setupPicker(data) {
     var pickerItems = []
     for (let i=0; i<data.length; i++) {
@@ -67,61 +42,56 @@ class InformationsForm extends React.Component {
   }
 
   render() {
-    let content=
-      <View style={{flex:1, justifyContent: 'space-around', paddingBottom: '5%'}}>
-        <Text style={{alignSelf: 'center', fontSize:15, paddingTop:10, fontStyle: 'italic'}}>Bonjour {this.props.route.params.firstName} !</Text>
-        <View style={{borderWidth: 0.5, borderRadius: 5}}>
-          <Text style={{alignSelf: 'center', fontSize:20, paddingVertical:5, fontWeight: 'bold'}}>Vous êtes</Text>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{ height: 100, width: 100 }}>
-              <Icon name='account-circle' color='#b7b9cc' size={100}/>
-            </View>
-            <View style={{flex:1}}>
-              <Picker
-                mode='dialog'
-                style={{flex: 1}}
-                selectedValue={this.state.role}
-                onValueChange={(itemValue, itemIndex) => {
-                  this.setState({role: itemValue})
-                }}
-              >
-                { this.setupPicker(this.state.roleData) }
-              </Picker>
-              <View style={{flexDirection : 'row'}}>
+    return (
+      <View style={styles.container}>
+        <View style={{flex:1, justifyContent: 'space-around', paddingBottom: '5%'}}>
+          <Text style={{alignSelf: 'center', fontSize:15, paddingTop:10, fontStyle: 'italic'}}>Bonjour {this.props.route.params.firstName} !</Text>
+          <View style={{borderWidth: 0.5, borderRadius: 5}}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={{ height: 100, width: 100 }}>
+                <Icon name='account-circle' color='#b7b9cc' size={100}/>
+              </View>
+              <View style={{flex:1}}>
+              <Text style={{alignSelf: 'center', fontSize:20, paddingVertical:5, fontWeight: 'bold'}}>Vous êtes</Text>
                 <Picker
-                  mode='dropdown'
+                  mode='dialog'
                   style={{flex: 1}}
-                  selectedValue={this.state.year}
+                  selectedValue={this.state.role}
                   onValueChange={(itemValue, itemIndex) => {
-                    this.setState({year: itemValue})
+                    this.setState({role: itemValue})
                   }}
                 >
-                  <Picker.Item label="Année" value='' key="annee"/>
-                  { this.setupPicker(this.state.yearsData) }
-                </Picker>
-                <Picker
-                  mode='dropdown'
-                  style={{flex: 1}}
-                  selectedValue={this.state.department}
-                  onValueChange={(itemValue, itemIndex) => {
-                    this.setState({department: itemValue})
-                  }}
-                >
-                  <Picker.Item label="Département" value='' key="department"/>
-                  { this.setupPicker(this.state.departmentsData) }
+                  { this.setupPicker(this.state.roleData) }
                 </Picker>
               </View>
             </View>
+            <View style={{flexDirection : 'row', paddingHorizontal: 10}}>
+              <Picker
+                mode='dropdown'
+                style={{flex: 1}}
+                selectedValue={this.state.year}
+                onValueChange={(itemValue, itemIndex) => {
+                  this.setState({year: itemValue})
+                }}
+
+              >
+                <Picker.Item label="Année" value='' key="annee"/>
+                { this.setupPicker(this.props.yearsData) }
+              </Picker>
+              <Picker
+                mode='dropdown'
+                style={{flex: 1}}
+                selectedValue={this.state.department}
+                onValueChange={(itemValue, itemIndex) => {
+                  this.setState({department: itemValue})
+                }}
+              >
+                <Picker.Item label="Département" value='' key="department"/>
+                { this.setupPicker(this.props.departmentsData) }
+              </Picker>
+            </View>
           </View>
         </View>
-      </View>
-
-    if (this.state.isLoadingYears || this.state.isLoadingDepartments) {
-      content = <LoadingWheel/>
-    }
-    return (
-      <View style={styles.container}>
-        {content}
         <View style={{paddingBottom: '5%', flex: 0.4, justifyContent: 'space-around'}}>
           <TouchableOpacity
             disabled={this.state.year=='' || this.state.department==''}
@@ -168,4 +138,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InformationsForm
+
+const mapStateToProps = (store) => {
+  return {
+    yearsData: store.apiFunctions.years,
+    departmentsData: store.apiFunctions.departments
+  }
+}
+
+export default connect(mapStateToProps)(InformationsForm)

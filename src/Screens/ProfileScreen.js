@@ -42,7 +42,7 @@ class Posts extends React.Component {
               this.props.dispatch({ type: 'API_USER', value: null });
             }}
           >
-            <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Logout</Text>
+            <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Déconnexion</Text>
           </TouchableOpacity>
         </ScrollView>
       </NavBar>

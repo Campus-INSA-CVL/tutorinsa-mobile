@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Animated, Easing, Dimensions, Image, Alert, Platform, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
-import client from '../feathers-client';
+import client, { handleTimeoutError, handleAllErrors } from '../feathers-client';
 
 import moment from 'moment';
 import 'moment/min/locales'
@@ -17,22 +17,12 @@ class LoadingScreen extends React.Component {
   state = {
     animationFinished: false,
     loadingFinished: false,
+    isServerAvailable: false,
   }
 
   constructor(props) {
     super(props);
     this.size = new Animated.Value(1000);
-
-    client.reAuthenticate().then((res) => {
-      this.setState({loadingFinished: true});
-      this.props.dispatch({ type: "AUTH_TRUE" });
-      this.props.dispatch({ type: "API_USER", value: res.user });
-      this.syncAnimAndLoading();
-    }).catch((e)=>{
-      this.setState({loadingFinished: true});
-      this.props.dispatch({ type: "AUTH_FALSE" });
-      this.syncAnimAndLoading();
-    });
   }
 
   loadIcons() {
@@ -49,15 +39,46 @@ class LoadingScreen extends React.Component {
     return list;
   }
 
+  checkInternet() {
+    client.service('years').find()
+          .then((data) => {
+            this.props.dispatch({ type: "API_YEARS", value: data });
+            client.service('departments').find()
+                  .then((data) => {
+                    this.props.dispatch({ type: "API_DEPARTMENTS", value: data });
+                    client.service('subjects').find()
+                          .then((data) => {
+                            this.props.dispatch({ type: "API_SUBJECTS", value: data });
+                            this.setState({isServerAvailable: true});
+                            this.syncAnimAndLoading();
+                          })
+                          // .catch((e) => {handleTimeoutError(e, () => {this.checkInternet()})});
+                  })
+                  // .catch((e) => {handleTimeoutError(e, () => {this.checkInternet()})});
+          })
+          .catch((e) => {handleTimeoutError(e, () => {this.checkInternet()})});
+  }
 
   syncAnimAndLoading() {
-    if (this.state.animationFinished && this.state.loadingFinished) {
+    if (this.state.animationFinished && this.state.loadingFinished && this.state.isServerAvailable) {
       this.props.onLoadingFinished();
     }
   }
 
-
   componentDidMount() {
+    client.reAuthenticate().then((res) => {
+      this.setState({loadingFinished: true});
+      this.props.dispatch({ type: "AUTH_TRUE" });
+      this.props.dispatch({ type: "API_USER", value: res.user });
+      this.syncAnimAndLoading();
+    }).catch((e)=>{
+      this.setState({loadingFinished: true});
+      this.props.dispatch({ type: "AUTH_FALSE" });
+      this.syncAnimAndLoading();
+    });
+
+    this.checkInternet();
+
     Animated.timing(
       this.size,
       {
@@ -78,7 +99,6 @@ class LoadingScreen extends React.Component {
   }
 
   render() {
-    console.log(Dimensions.get("window").width + " x " + Dimensions.get("window").height);
     return (
       <View style={{flex: 1}}>
         <View style={{position: 'absolute', top: -500, left: 0}}>

@@ -22,7 +22,7 @@ class EmailPassForm extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{flex:1, justifyContent: 'space-around', paddingBottom: '5%'}}>
-          <Text style={{alignSelf: 'center', fontSize:15, paddingTop:10, fontStyle: 'italic'}}>Vous y êtes presque !</Text>
+          <Text style={{alignSelf: 'center', fontSize:15, paddingTop:10, fontStyle: 'italic'}}>{this.state.emailError || this.state.passwordError ? "" : "Vous y êtes presque !"}</Text>
           <Input
             value={this.state.email}
             onChangeText={(val) => this.setState({ email: val })}
@@ -31,7 +31,9 @@ class EmailPassForm extends React.Component {
             returnKeyType="next"
             inputContainerStyle={styles.inputContainer}
             placeholder="Entrez votre email"
-            errorMessage={this.state.emailError ? 'Ce n\'est pas une adresse email insa-cvl.fr valide.' : ''}
+            autoCapitalize="none"
+            errorMessage={this.state.emailError ? 'Adresse email insa-cvl.fr non valide.' : ''}
+            errorStyle={{paddingBottom: 20}}
             placeholderTextColor={'#aaa'}
             keyboardType='email-address'
           />
@@ -60,6 +62,7 @@ class EmailPassForm extends React.Component {
             errorMessage={this.state.passwordError ? 'Le mot de passe doit respecter les règles suivantes :\n - 8 caractères minimum\n - 1 lettre majuscule minimum\n - 1 lettre minuscule minimum\n - 1 chiffre minimum\n - 1 caractère spécial minimum' : ''}
             placeholderTextColor={'#aaa'}
             returnKeyType="done"
+
           />
         </View>
         <View style={{paddingBottom: '5%', flex: 0.4, justifyContent: 'space-around'}}>

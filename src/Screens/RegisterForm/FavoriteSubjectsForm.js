@@ -3,60 +3,44 @@ import { StyleSheet, View, TouchableOpacity, Text, Picker, FlatList } from 'reac
 import { Input, CheckBox } from 'react-native-elements';
 import Dots from '../../Components/Dots';
 import LoadingWheel from '../../Components/LoadingWheel';
-import client, { handleErrors } from '../../feathers-client';
+import client from '../../feathers-client';
+import { connect } from 'react-redux';
 
 class FavoriteSubjectsForm extends React.Component {
   state={
-    subjectsData: [{"_id": '', "name": "Chargement..."}],
     isLoadingSubjects: true,
     favoriteSubjects: [],
   }
 
-  componentDidMount() {
-    client.service('subjects').find()
-          .then((data) => {
-            this.setState({
-              subjectsData: data,
-              isLoadingSubjects: false
-            });
-          })
-          .catch(handleErrors);
-  }
-
   render() {
-    let content =
-      <View style={{flex:1, justifyContent: 'space-around', paddingBottom: '5%'}}>
-        <Text style={{alignSelf: 'center', fontSize:15, paddingVertical:10, fontStyle: 'italic'}}>Quelles sont vos matières préférées ?</Text>
-        <FlatList
-          data={this.state.subjectsData}
-          keyExtractor={(item) => item._id}
-          renderItem={({item}) =>
-            <CheckBox
-              title={item.name}
-              iconRight
-              checkedIcon=<View style={{height: 31}}/>
-              uncheckedIcon=<View style={{height: 31}}/>
-              containerStyle={{backgroundColor: this.state.favoriteSubjects.includes(item._id) ? '#b0c4ff' : '#fafafa'}}
-              onPress={() => {
-                let tmp = this.state.favoriteSubjects;
-                if (this.state.favoriteSubjects.includes(item._id)) {
-                  tmp.splice(tmp.indexOf(item._id), 1);
-                }
-                else {
-                  tmp.push(item._id);
-                }
-                this.setState({favoriteSubjects: tmp});
-              }}
-            />
-          }
-        />
-      </View>
-    if (this.state.isLoadingSubjects) {
-      content = <LoadingWheel/>
-    }
     return (
       <View style={styles.container}>
-        {content}
+        <View style={{flex:1, justifyContent: 'space-around', paddingBottom: '5%'}}>
+          <Text style={{alignSelf: 'center', fontSize:15, paddingVertical:10, fontStyle: 'italic'}}>Quelles sont vos matières préférées ?</Text>
+          <FlatList
+            data={this.props.subjectsData}
+            keyExtractor={(item) => item._id}
+            renderItem={({item}) =>
+              <CheckBox
+                title={item.name}
+                iconRight
+                checkedIcon=<View style={{height: 31}}/>
+                uncheckedIcon=<View style={{height: 31}}/>
+                containerStyle={{backgroundColor: this.state.favoriteSubjects.includes(item._id) ? '#b0c4ff' : '#fafafa'}}
+                onPress={() => {
+                  let tmp = this.state.favoriteSubjects;
+                  if (this.state.favoriteSubjects.includes(item._id)) {
+                    tmp.splice(tmp.indexOf(item._id), 1);
+                  }
+                  else {
+                    tmp.push(item._id);
+                  }
+                  this.setState({favoriteSubjects: tmp});
+                }}
+              />
+            }
+          />
+        </View>
         <View style={{paddingBottom: '5%', flex: 0.4, justifyContent: 'space-around'}}>
           <TouchableOpacity
             disabled={this.state.favoriteSubjects.length==0}
@@ -104,4 +88,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FavoriteSubjectsForm
+const mapStateToProps = (store) => {
+  return {
+    subjectsData: store.apiFunctions.subjects
+  }
+}
+
+export default connect(mapStateToProps)(FavoriteSubjectsForm)

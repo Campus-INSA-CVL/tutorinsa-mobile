@@ -7,7 +7,7 @@ import Separator from '../Components/Separator';
 import LoadingWheel from '../Components/LoadingWheel';
 import ExternalLink from '../Components/ExternalLink';
 import InternalLink from '../Components/InternalLink';
-import client, { handleErrors } from '../feathers-client';
+import client, { handleAllErrors } from '../feathers-client';
 
 class LoginScreen extends React.Component {
   state = { email: '', password: '', isLoading: false };
@@ -21,13 +21,13 @@ class LoginScreen extends React.Component {
       strategy: "local",
       email: state.email,
       password: state.password,
-    }).then(() => {
+    }).then((res) => {
       this.setState({ isLoading: false })
       this.props.dispatch({ type: "AUTH_TRUE" });
       this.props.dispatch({ type: "API_USER", value: res.user });
     }).catch(e => {
       this.setState({ isLoading: false, password: '' })
-      handleErrors(e)
+      handleAllErrors(e)
     });
   }
 
@@ -62,6 +62,7 @@ class LoginScreen extends React.Component {
               blurOnSubmit={false}
               inputContainerStyle={styles.inputContainer}
               placeholder="Entrez votre email"
+              autoCapitalize="none"
               placeholderTextColor={'#aaa'}
               returnKeyType="next"
               keyboardType='email-address'
@@ -87,7 +88,7 @@ class LoginScreen extends React.Component {
                 this.setState({ isLoading: true });
               }}
             >
-              <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Login</Text>
+              <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Connexion</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
           <Separator backgroundColor='#d1d3e2'/>

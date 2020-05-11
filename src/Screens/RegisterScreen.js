@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (store) => {
-  return { register_complete: store.authFunctions.register_complete }
+  return { register_complete: store.registerFunctions.register_complete }
 }
 
 export default connect(mapStateToProps)(RegisterScreen)
