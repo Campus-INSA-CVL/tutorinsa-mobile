@@ -35,12 +35,12 @@ class PostDetails extends React.Component {
   }
 
   render() {
-    const { post } = this.props.route.params;
+    const { post, theme } = this.props.route.params;
 
     return (
       <NavBar navigation={this.props.navigation} goBack>
-        <View style={styles.container}>
-          <Text style={{alignSelf: 'center', fontWeight: 'bold'}}>{post.subject.name}</Text>
+        <View style={{backgroundColor: theme.foreground, ...styles.container}}>
+          <Text style={{alignSelf: 'center', fontWeight: 'bold', color: theme.title}}>{post.subject.name}</Text>
         </View>
       </NavBar>
     );
@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     paddingTop: 10,
+    alignItems: 'center',
+    paddingHorizontal: "8%"
   },
 });
 

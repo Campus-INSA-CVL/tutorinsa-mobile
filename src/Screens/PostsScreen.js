@@ -4,6 +4,7 @@ import Announce from '../Components/Announce';
 import NavBar from '../Components/NavBar';
 import LoadingWheel from '../Components/LoadingWheel';
 import client, { handleAllErrors } from '../feathers-client';
+import { connect } from 'react-redux';
 
 /*
 {
@@ -50,6 +51,7 @@ class Posts extends React.Component {
   }
 
   render() {
+    const { theme } = this.props;
     let content;
 
     if (this.state.loadingPosts) {
@@ -57,7 +59,7 @@ class Posts extends React.Component {
     }
     else {
       content = <FlatList
-                  contentContainerStyle={{paddingBottom:20}}
+                  contentContainerStyle={{ paddingBottom:20, backgroundColor: theme.foreground }}
                   refreshing={this.state.refreshing}
                   onRefresh={() => {
                     client.service('posts').find()
@@ -78,11 +80,11 @@ class Posts extends React.Component {
                     return (
                       <TouchableOpacity
                         onPress={() => {
-                          this.props.navigation.navigate("PostDetails", {post: item})
+                          this.props.navigation.navigate("PostDetails", {post: item, theme: theme})
                         }}
                         style={{
                           margin: 20,
-                          marginBottom: 0
+                          marginBottom: 0,
                         }}
                       >
                         <Announce item={item}/>
@@ -100,4 +102,11 @@ class Posts extends React.Component {
   }
 }
 
-export default Posts
+
+const mapStateToProps = (store) => {
+  return {
+    theme: store.themeFunctions.theme,
+  }
+}
+
+export default connect(mapStateToProps)(Posts)

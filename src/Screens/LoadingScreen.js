@@ -52,11 +52,16 @@ class LoadingScreen extends React.Component {
                             this.setState({isServerAvailable: true});
                             this.syncAnimAndLoading();
                           })
-                          // .catch((e) => {handleTimeoutError(e, () => {this.checkInternet()})});
                   })
-                  // .catch((e) => {handleTimeoutError(e, () => {this.checkInternet()})});
           })
-          .catch((e) => {handleTimeoutError(e, () => {this.checkInternet()})});
+          .catch((e) => {
+            if (e.name == "NotAuthenticated") {
+              handleAllErrors(e);
+            }
+            else {
+              handleTimeoutError(e, () => {this.checkInternet()});
+            }
+          });
   }
 
   syncAnimAndLoading() {

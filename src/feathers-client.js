@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import { AsyncStorage, Alert } from 'react-native';
 import auth from '@feathersjs/authentication-client';
 
-const API_URL = 'http://192.168.1.48:3030';
+const API_URL = 'http://192.168.43.143:3030';
 
 const socket = io(API_URL);
 const client = feathers();
@@ -16,38 +16,17 @@ client.configure(socketio(socket))
 
 export default client
 
-export function handleTimeoutError(e, retry) {
-  if (e.name == "Timeout") {
-    if (retry == undefined) {
-      Alert.alert(
-        'Erreur',
-        'Serveur introuvable. Veuillez vérifier votre connexion internet.',
-        [
-          {text: "D'accord"},
-        ]
-      );
-    }
-    else {
-      Alert.alert(
-        'Erreur',
-        'Serveur introuvable. Veuillez vérifier votre connexion internet.',
-        [
-          {text: "Réessayer", onPress: retry},
-        ]
-      );
-    }
-  }
-}
-
-export function handleAllErrors(e) {
+export function handleAllErrors(e, retry) {
   console.log('Error catched : '+e.name);
   if (e.name == "Timeout") {
+    let buttons = (retry == undefined)
+      ? [ { text: "D'accord" }, ]
+      : [ { text: "Annuler", style: 'cancel' },
+          { text: "Réessayer", onPress: retry }, ]
     Alert.alert(
       'Erreur',
       'Serveur introuvable. Veuillez vérifier votre connexion internet.',
-      [
-        {text: "D'accord"},
-      ]
+      buttons
     );
   }
   else if (e.name == "NotAuthenticated") {

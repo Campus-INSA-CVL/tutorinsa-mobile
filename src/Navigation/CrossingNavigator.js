@@ -12,22 +12,26 @@ class CrossingNavigator extends React.Component {
   render() {
     if (this.state.loading) {
       return (<LoadingScreen
-                onLoadingFinished={() => {this.setState({loading: false})}}
+                onLoadingFinished={() => {
+                  this.setState({ loading: false });
+                }}
               />
       );
     }
     else if (this.props.auth_success) {
-      return(<MainDrawerNavigation/>)
+      return(<MainDrawerNavigation theme={this.props.theme}/>)
     }
     else {
-      console.log("auth_success is "+this.props.auth_success);
       return(<AuthStackNavigation/>)
     }
   }
 }
 
 const mapStateToProps = (store) => {
-  return { auth_success: store.authFunctions.auth_success}
+  return {
+    auth_success: store.authFunctions.auth_success,
+    theme: store.themeFunctions.theme,
+  }
 }
 
 export default connect(mapStateToProps)(CrossingNavigator)

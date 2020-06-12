@@ -5,24 +5,13 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-
 import { createStackNavigator } from '@react-navigation/stack';
 import { SlideFromRightTransition } from './Transitions';
+
 
 import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
 import Profile from '../Screens/ProfileScreen';
-
-
-const Drawer = createDrawerNavigator();
-
-function CustomDrawerContent(props) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} labelStyle={{fontWeight: 'bold', fontSize: 20}} />
-    </DrawerContentScrollView>
-  );
-}
 
 const PostsStack = createStackNavigator();
 function PostsNavigator() {
@@ -51,13 +40,29 @@ function PostsNavigator() {
   );
 }
 
+
+const Drawer = createDrawerNavigator();
+
 class MainDrawerNavigation extends React.Component {
   render() {
+    const { theme } = this.props;
+
     return (
       <NavigationContainer>
         <Drawer.Navigator
           initialRouteName="Posts"
-          drawerContent={CustomDrawerContent}
+          drawerContent={(props) => {return (
+            <DrawerContentScrollView {...props} style={{backgroundColor: theme.background}}>
+              <DrawerItemList
+                {...props}
+                labelStyle={{
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                  color: theme.title
+                }}
+              />
+            </DrawerContentScrollView>
+          )}}
           minSwipeDistance={50}
         >
           <Drawer.Screen

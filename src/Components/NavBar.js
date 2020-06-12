@@ -1,19 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import Announce from '../Components/Announce';
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
 
 const NAVBAR_HEIGHT = 80;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
 class NavBar extends React.Component {
   render() {
+    const { theme } = this.props;
+
     return (
-      <View style={styles.container}>
+      <View style={{backgroundColor: theme.background, ...styles.container}}>
         <View style={{height: Dimensions.get('window').height-NAVBAR_HEIGHT}}>
           { this.props.children }
         </View>
-        <View style={styles.navbar}>
+        <View style={{backgroundColor: theme.background, ...styles.navbar}}>
           <TouchableOpacity
             onPress={() => {
               this.props.goBack
@@ -21,10 +24,10 @@ class NavBar extends React.Component {
               : this.props.navigation.openDrawer()
             }}
             style={{ width: 50 }}>
-            <MaterialIcons name={this.props.goBack ? 'arrow-back' : 'menu'} color='#777' size={30} style={{paddingLeft: 20}}/>
+            <MaterialIcons name={this.props.goBack ? 'arrow-back' : 'menu'} color={theme.subtitle /*'#777'*/} size={30} style={{paddingLeft: 20}}/>
           </TouchableOpacity>
           <View style={{flex: 1, alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>
+            <Text style={{fontWeight: 'bold', fontSize: 20, color: theme.title}}>
               { this.props.title }
             </Text>
           </View>
@@ -37,7 +40,6 @@ class NavBar extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flex:1,
     justifyContent: 'flex-end'
   },
@@ -54,7 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: NAVBAR_HEIGHT,
     paddingTop: STATUS_BAR_HEIGHT,
-    backgroundColor: 'white',
 
     // Shadow //
       shadowColor: "#000",
@@ -64,9 +65,16 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.36,
       shadowRadius: 6.68,
-      elevation: 11,
+      elevation: 3,
     // --- //
   },
 });
 
-export default NavBar
+
+const mapStateToProps = (store) => {
+  return {
+    theme: store.themeFunctions.theme,
+  }
+}
+
+export default connect(mapStateToProps)(NavBar)

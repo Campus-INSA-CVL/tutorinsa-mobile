@@ -1,6 +1,4 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -15,8 +13,9 @@ class AuthStackNavigation extends React.Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login"
-            options={{headerShown: false}}
-            initialParams={{onLoginSuccess: this.props.onLoginSuccess}}
+            options={{
+              headerShown: false
+            }}
             component={LoginScreen}
           />
           <Stack.Screen name="Register"
