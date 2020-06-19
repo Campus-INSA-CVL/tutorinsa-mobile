@@ -1,11 +1,10 @@
-import { forFade } from '@react-navigation/stack';
-import { Easing } from 'react-native';
-import { Animated } from 'react-native';
+import { forFade, CardStyleInterpolators } from '@react-navigation/stack';
+import { Easing, Animated } from 'react-native';
 
 const { add, multiply } = Animated;
 
 export const FadeTransition = {
-  gestureEnabled: false, // true ?
+  gestureEnabled: false,
   gestureDirection: 'horizontal',
   transitionSpec: {
     open: {
@@ -77,7 +76,7 @@ export const SlideFromRightTransition = {
       ? multiply(
           next.progress.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, screen.width * -0.3],
+            outputRange: [0, -screen.width],
             extrapolate: 'clamp',
           }),
           inverted
@@ -96,4 +95,53 @@ export const SlideFromRightTransition = {
     };
   },
   headerStyleInterpolator: forFade,
+};
+
+const easeOutExpoConfig = {
+  animation: 'timing',
+  config: {
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+    duration: 600
+  }
+}
+
+export const SlideFromBottomTransition = {
+  transitionSpec: {
+    open: easeOutExpoConfig,
+    close: easeOutExpoConfig,
+  },
+  cardStyleInterpolator: ({current, next, inverted, layouts: { screen }}) => {
+
+    const translateFocused = multiply(
+      current.progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [screen.height, 0],
+        extrapolate: 'clamp',
+      }),
+      inverted
+    );
+
+    const translateUnfocused = next
+      ? multiply(
+          next.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, -screen.height],
+            extrapolate: 'clamp',
+          }),
+          inverted
+        )
+      : 0;
+
+
+    return {
+      cardStyle: {
+        transform: [
+          // Translation for the animation of the current card
+          { translateY: translateFocused },
+          // Translation for the animation of the card on top of this
+          { translateY: translateUnfocused },
+        ],
+      },
+    };
+  },
 };

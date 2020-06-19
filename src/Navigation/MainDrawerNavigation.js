@@ -8,7 +8,6 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 import { SlideFromRightTransition } from './Transitions';
 
-
 import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
 import Profile from '../Screens/ProfileScreen';

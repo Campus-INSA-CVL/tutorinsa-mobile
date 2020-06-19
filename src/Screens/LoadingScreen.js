@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Animated, Easing, Dimensions, Image, Alert, Platform, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
-import client, { handleTimeoutError, handleAllErrors } from '../feathers-client';
+import client, { handleAllErrors } from '../feathers-client';
 
 import moment from 'moment';
 import 'moment/min/locales'
@@ -40,6 +40,9 @@ class LoadingScreen extends React.Component {
   }
 
   checkInternet() {
+
+    let auth_false = () => {this.props.dispatch({ type: "AUTH_FALSE" })}
+
     client.service('years').find()
           .then((data) => {
             this.props.dispatch({ type: "API_YEARS", value: data });
@@ -51,16 +54,15 @@ class LoadingScreen extends React.Component {
                             this.props.dispatch({ type: "API_SUBJECTS", value: data });
                             this.setState({isServerAvailable: true});
                             this.syncAnimAndLoading();
-                          })
-                  })
+                          }).catch((e) => {
+                            handleAllErrors(e, () => {this.checkInternet()}, auth_false);
+                          });
+                  }).catch((e) => {
+                    handleAllErrors(e, () => {this.checkInternet()}, auth_false);
+                  });
           })
           .catch((e) => {
-            if (e.name == "NotAuthenticated") {
-              handleAllErrors(e);
-            }
-            else {
-              handleTimeoutError(e, () => {this.checkInternet()});
-            }
+            handleAllErrors(e, () => {this.checkInternet()}, auth_false);
           });
   }
 

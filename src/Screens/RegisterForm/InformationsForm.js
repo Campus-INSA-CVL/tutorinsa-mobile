@@ -122,7 +122,6 @@ class InformationsForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: 'white',
   },
   inputContainer: {
     borderRadius: 20,

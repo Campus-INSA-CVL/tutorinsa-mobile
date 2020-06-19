@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import LoadingScreen from '../Screens/LoadingScreen'
+import { LinearGradient } from 'expo-linear-gradient';
 import AuthStackNavigation from '../Navigation/AuthStackNavigation'
 import MainDrawerNavigation from '../Navigation/MainDrawerNavigation'
 
@@ -11,18 +13,28 @@ class CrossingNavigator extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return (<LoadingScreen
-                onLoadingFinished={() => {
-                  this.setState({ loading: false });
-                }}
-              />
+      return (
+        <LoadingScreen
+          onLoadingFinished={() => {
+            this.setState({ loading: false });
+          }}
+        />
       );
     }
     else if (this.props.auth_success) {
       return(<MainDrawerNavigation theme={this.props.theme}/>)
     }
     else {
-      return(<AuthStackNavigation/>)
+      return(
+        <LinearGradient
+          style={{ flex: 1 }}
+          colors={['#4e73df', '#224abe']}
+          start={{x:0, y:0.1}}
+          end={{x:0, y:1}}
+        >
+          <AuthStackNavigation/>
+        </LinearGradient>
+      );
     }
   }
 }

@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import { AsyncStorage, Alert } from 'react-native';
 import auth from '@feathersjs/authentication-client';
 
+// const API_URL = 'https://tutorinsa-server.herokuapp.com';
 const API_URL = 'http://192.168.43.143:3030';
 
 const socket = io(API_URL);
@@ -16,7 +17,7 @@ client.configure(socketio(socket))
 
 export default client
 
-export function handleAllErrors(e, retry) {
+export function handleAllErrors(e, retry, dispatch) {
   console.log('Error catched : '+e.name);
   if (e.name == "Timeout") {
     let buttons = (retry == undefined)
@@ -30,12 +31,13 @@ export function handleAllErrors(e, retry) {
     );
   }
   else if (e.name == "NotAuthenticated") {
+    let buttons = (dispatch == undefined)
+      ? [ { text: "D'accord" }, ]
+      : [ { text: "D'accord", onPress: () => {dispatch({ type: "AUTH_FALSE" });} }, ]
     Alert.alert(
       'Erreur',
       'Email ou mot de passe invalide.',
-      [
-        {text: "D'accord"},
-      ]
+      buttons
     );
   }
   else {

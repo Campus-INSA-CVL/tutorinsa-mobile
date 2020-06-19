@@ -5,6 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SlideFromRightTransition } from './Transitions';
 
+import StepIndicator from 'react-native-step-indicator';
+
+import WelcomeScreen from '../Screens/WelcomeScreen';
 import NameForm from '../Screens/RegisterForm/NameForm';
 import EmailPassForm from '../Screens/RegisterForm/EmailPassForm';
 import ConfirmPassForm from '../Screens/RegisterForm/ConfirmPassForm';
@@ -19,73 +22,77 @@ const Stack = createStackNavigator();
 class RegisterNavigation extends React.Component {
   render() {
     return (
-      <NavigationContainer independent={true}>
-        <Stack.Navigator initialRouteName="Name">
+      <NavigationContainer
+        independent={true}
+        theme={{
+          colors: {
+            background: 'transparent',
+          }
+        }}
+      >
+        <Stack.Navigator
+          initialRouteName="Welcome"
+          screenOptions={{
+            headerShown: false,
+            ...SlideFromRightTransition
+          }}
+        >
+          <Stack.Screen name="Welcome"
+            options={{
+              gestureEnabled: true
+            }}
+            component={WelcomeScreen}
+          />
           <Stack.Screen name="Name"
             options={{
-              headerShown: false,
-              gestureEnabled: true,
-              ...SlideFromRightTransition,
+              gestureEnabled: true
             }}
             component={NameForm}
           />
           <Stack.Screen name="Informations"
           options={{
-            headerShown: false,
-            gestureEnabled: true,
-            ...SlideFromRightTransition,
+            gestureEnabled: true
           }}
           component={InformationsForm}
           />
           <Stack.Screen name="FavoriteSubjects"
           options={{
-            headerShown: false,
-            gestureEnabled: true,
-            ...SlideFromRightTransition,
+            gestureEnabled: true
           }}
           component={FavoriteSubjectsForm}
           />
           <Stack.Screen name="DifficultSubjects"
           options={{
-            headerShown: false,
-            gestureEnabled: true,
-            ...SlideFromRightTransition,
+            gestureEnabled: true
           }}
           component={DifficultSubjectsForm}
           />
           <Stack.Screen name="EmailPass"
           options={{
-            headerShown: false,
-            gestureEnabled: true,
-            ...SlideFromRightTransition,
+            gestureEnabled: true
           }}
           component={EmailPassForm}
           />
           <Stack.Screen name="ConfirmPass"
             options={{
-              headerShown: false,
-              gestureEnabled: true,
-              ...SlideFromRightTransition,
+              gestureEnabled: true
             }}
             component={ConfirmPassForm}
           />
           <Stack.Screen name="ConfirmInscription"
             options={{
-              headerShown: false,
-              gestureEnabled: false,
-              ...SlideFromRightTransition,
+              gestureEnabled: false
             }}
             component={ConfirmInscription}
           />
           <Stack.Screen name="Error"
             options={{
-              headerShown: false,
-              gestureEnabled: false,
-              ...SlideFromRightTransition,
+              gestureEnabled: false
             }}
             component={ErrorInscription}
           />
         </Stack.Navigator>
+
       </NavigationContainer>
     );
   }
