@@ -1,5 +1,17 @@
 import React from 'react'
-import { StyleSheet, View, Animated, Easing, Dimensions, Image, Alert, Platform, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Animated,
+  Easing,
+  Dimensions,
+  Image,
+  Alert,
+  Platform,
+  Text,
+  StatusBar,
+} from 'react-native';
+
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import client, { handleAllErrors } from '../feathers-client';
@@ -8,10 +20,11 @@ import moment from 'moment';
 import 'moment/min/locales'
 import { NativeModules } from 'react-native'
 
-import { MaterialIcons, AntDesign } from '@expo/vector-icons'
+import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 
 const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back']
 const antDesignList = ['calendar', 'clockcircleo']
+const featherList = ['check']
 
 class LoadingScreen extends React.Component {
   state = {
@@ -34,6 +47,10 @@ class LoadingScreen extends React.Component {
 
     materialIconsList.forEach((item, i) => {
       list.push(<MaterialIcons name={item} key={'mat'+i}/>);
+    });
+
+    featherList.forEach((item, i) => {
+      list.push(<Feather name={item} key={'fea'+i}/>);
     });
 
     return list;
@@ -106,6 +123,7 @@ class LoadingScreen extends React.Component {
   }
 
   render() {
+    StatusBar.setHidden(true);
     return (
       <View style={{flex: 1}}>
         <View style={{position: 'absolute', top: -500, left: 0}}>
@@ -113,9 +131,10 @@ class LoadingScreen extends React.Component {
         </View>
         <LinearGradient
           style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-          colors={['#4e73df', '#224abe']}
-          start={{x:0, y:0.1}}
+          colors={['#7196ff', '#224abe', '#324389']}
+          start={{x:0, y:0}}
           end={{x:0, y:1}}
+          locations={[0.05, 0.45, 1]}
         >
         <Animated.View style={{width: this.size, height: this.size, borderRadius: 100, backgroundColor: 'white', alignItems:'center', justifyContent:'center'}}>
           <Image

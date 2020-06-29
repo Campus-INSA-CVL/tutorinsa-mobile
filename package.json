@@ -8,36 +8,36 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.0.6",
+    "@expo/vector-icons": "^10.0.0",
     "@feathersjs/authentication-client": "^4.5.1",
     "@feathersjs/feathers": "^4.5.1",
     "@feathersjs/socketio-client": "^4.5.1",
     "@react-native-community/async-storage": "^1.8.1",
-    "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/drawer": "^5.5.0",
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
-    "expo": "~36.0.0",
-    "expo-linear-gradient": "^8.0.0",
+    "expo": "^37.0.0",
+    "expo-linear-gradient": "~8.1.0",
     "moment": "^2.24.0",
-    "react": "~16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react": "16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
     "react-native-elements": "^1.2.7",
-    "react-native-gesture-handler": "^1.5.3",
+    "react-native-gesture-handler": "~1.6.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
-    "react-native-reanimated": "^1.7.0",
+    "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",
-    "react-native-screens": "^2.0.0-alpha.29",
+    "react-native-screens": "~2.2.0",
     "react-native-vector-icons": "^6.6.0",
-    "react-native-web": "~0.11.7",
+    "react-native-web": "^0.11.7",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "babel-preset-expo": "^8.0.0",
-    "react-dom": "^16.9.0"
+    "babel-preset-expo": "^8.1.0",
+    "react-dom": "16.9.0"
   },
   "private": true
 }

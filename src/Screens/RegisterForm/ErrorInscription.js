@@ -1,11 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Input } from 'react-native-elements';
-import Dots from '../../Components/Dots';
+import Card from '../../Components/Card';
 import client from '../../feathers-client';
 import { MaterialIcons as Icon } from '@expo/vector-icons'
 
 class ErrorInscription extends React.Component {
+
+  componentDidMount() {
+    this.props.dispatch({ type: "STEPPER_SET", value: 6});
+  }
+
   render() {
     let content =
       <View style={{alignItems: 'center'}}>
@@ -14,7 +20,8 @@ class ErrorInscription extends React.Component {
         <Text style={{fontSize:15, fontStyle: 'italic'}}>({this.props.route.params.error})</Text>
       </View>
     let retryFunc = () => {
-      this.props.navigation.replace("Name")
+      this.props.navigation.replace("Name");
+      this.props.dispatch({ type: "STEPPER_SET", value: 0});
     }
     if (this.props.route.params.error=='Conflict') {
       content =
@@ -31,21 +38,24 @@ class ErrorInscription extends React.Component {
           department: this.props.route.params.department,
           favoriteSubjects: this.props.route.params.favoriteSubjects,
           difficultSubjects: this.props.route.params.difficultSubjects,
-        })
+        });
+        this.props.dispatch({ type: "STEPPER_SET", value: 4});
       }
     }
     return (
       <View style={styles.container}>
-        <View style={{alignItems: 'center', justifyContent: 'center', paddingBottom: '5%'}}>
-          <Icon name='error-outline' color='#d01427' size={100}/>
-          { content }
-        </View>
-        <TouchableOpacity
-          style={{backgroundColor: '#4e73df', ...styles.nextButton}}
-          onPress={retryFunc}
-        >
-          <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Réessayer</Text>
-        </TouchableOpacity>
+        <Card style={styles.card}>
+          <View style={styles.content}>
+            <Icon name='error-outline' color='#d01427' size={100}/>
+            { content }
+          </View>
+          <TouchableOpacity
+            style={{backgroundColor: '#4e73df', ...styles.nextButton}}
+            onPress={retryFunc}
+          >
+            <Text style={styles.buttonLabel}>Réessayer</Text>
+          </TouchableOpacity>
+        </Card>
       </View>
     );
   }
@@ -54,8 +64,14 @@ class ErrorInscription extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+  },
+  card: {
     justifyContent: 'space-around',
-    backgroundColor: 'white',
+  },
+  content: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: '5%',
   },
   nextButton: {
     paddingVertical: 10,
@@ -63,6 +79,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
   },
+  buttonLabel: {
+    alignSelf: 'center',
+    color: 'white',
+    fontSize:15,
+  }
 });
 
-export default ErrorInscription
+export default connect(() => {return {}})(ErrorInscription)

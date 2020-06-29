@@ -1,7 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView
+} from 'react-native';
 import { Input } from 'react-native-elements';
+
 import Separator from '../Components/Separator';
 import LoadingWheel from '../Components/LoadingWheel';
 import ExternalLink from '../Components/ExternalLink';
@@ -92,14 +101,14 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     alignItems: 'center',
-    paddingTop: 24,
+    paddingTop: 24
   },
   content: {
     width: '85%',
     marginVertical: '15%',
     paddingHorizontal: '5%',
-    borderRadius: 5,
-    flex: 3,
+    borderRadius: 20,
+    flex: 1,
     backgroundColor: 'white'
   },
   form:{

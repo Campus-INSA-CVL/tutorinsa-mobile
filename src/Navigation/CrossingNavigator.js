@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import LoadingScreen from '../Screens/LoadingScreen'
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,6 +12,9 @@ class CrossingNavigator extends React.Component {
   };
 
   render() {
+    StatusBar.setHidden(false);
+    StatusBar.setBarStyle('light-content', true);
+
     if (this.state.loading) {
       return (
         <LoadingScreen
@@ -28,9 +31,10 @@ class CrossingNavigator extends React.Component {
       return(
         <LinearGradient
           style={{ flex: 1 }}
-          colors={['#4e73df', '#224abe']}
-          start={{x:0, y:0.1}}
+          colors={['#7196ff', '#224abe', '#324389']}
+          start={{x:0, y:0}}
           end={{x:0, y:1}}
+          locations={[0.05, 0.45, 1]}
         >
           <AuthStackNavigation/>
         </LinearGradient>

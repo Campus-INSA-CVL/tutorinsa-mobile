@@ -1,4 +1,4 @@
-# tutorinsa-server
+# tutorinsa-mobile
 
 ## About
 
@@ -12,6 +12,7 @@ to run it.
 1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 
 2. Install globally expo-cli
+
   ```
   npm install -g expo-cli
   ```

@@ -11,7 +11,7 @@ class WelcomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              this.props.navigation.navigate("Name");
+              this.props.navigation.navigate("Register");
             }}
           >
             <Text style={styles.buttonLabel}>Créer un compte</Text>
@@ -19,7 +19,7 @@ class WelcomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              this.props.dispatch({ type: "REGISTER_COMPLETE" });
+              this.props.navigation.navigate("Login");
             }}
           >
             <Text style={styles.buttonLabel}>J'ai déjà un compte</Text>
@@ -49,12 +49,10 @@ class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    paddingTop: 20,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   content: {
     width: '85%',
-    marginBottom: '5%',
     paddingHorizontal: '5%',
     flex: 5,
   },

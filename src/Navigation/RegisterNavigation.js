@@ -5,8 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SlideFromRightTransition } from './Transitions';
 
-import StepIndicator from 'react-native-step-indicator';
-
 import WelcomeScreen from '../Screens/WelcomeScreen';
 import NameForm from '../Screens/RegisterForm/NameForm';
 import EmailPassForm from '../Screens/RegisterForm/EmailPassForm';
@@ -31,18 +29,12 @@ class RegisterNavigation extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="Welcome"
+          initialRouteName="Name"
           screenOptions={{
             headerShown: false,
             ...SlideFromRightTransition
           }}
         >
-          <Stack.Screen name="Welcome"
-            options={{
-              gestureEnabled: true
-            }}
-            component={WelcomeScreen}
-          />
           <Stack.Screen name="Name"
             options={{
               gestureEnabled: true
