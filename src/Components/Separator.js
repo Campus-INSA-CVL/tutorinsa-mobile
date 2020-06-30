@@ -4,7 +4,7 @@ import { View } from 'react-native';
 class Separator extends React.Component {
   render() {
     return (
-      <View style={{borderColor: '#ddd', borderWidth: 0.5, height: 1}}></View>
+      <View style={{borderColor: this.props.backgroundColor, borderWidth: 0.5, height: 1, marginVertical: 10}}></View>
     );
   }
 }
