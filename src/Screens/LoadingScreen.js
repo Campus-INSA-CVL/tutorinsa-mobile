@@ -19,7 +19,6 @@ import client, { handleAllErrors } from '../feathers-client';
 import moment from 'moment';
 import 'moment/min/locales'
 import { NativeModules } from 'react-native'
-
 import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 
 const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back']
@@ -108,7 +107,8 @@ class LoadingScreen extends React.Component {
       {
         toValue: Dimensions.get('window').width*0.3,
         duration: 1500,
-        easing: Easing.out(Easing.exp)
+        easing: Easing.out(Easing.exp),
+        useNativeDriver: false
       }
     ).start(() => {
       this.setState({animationFinished: true});

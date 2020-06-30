@@ -1,10 +1,17 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import client, { handleAllErrors } from '../feathers-client';
+import { connect } from 'react-redux';
+import {
+  View,
+  Text,
+  FlatList,
+  StatusBar,
+  TouchableOpacity
+} from 'react-native';
+
 import Announce from '../Components/Announce';
 import NavBar from '../Components/NavBar';
 import LoadingWheel from '../Components/LoadingWheel';
-import client, { handleAllErrors } from '../feathers-client';
-import { connect } from 'react-redux';
 
 /*
 {
@@ -40,6 +47,9 @@ class Posts extends React.Component {
   }
 
   componentDidMount() {
+    StatusBar.setHidden(false);
+    StatusBar.setBarStyle('dark-content', true);
+
     client.service('posts').find()
           .then((res) => {
             this.setState({
@@ -89,7 +99,8 @@ class Posts extends React.Component {
                       >
                         <Announce item={item}/>
                       </TouchableOpacity>
-                    )
+
+                    );
                   }}
                 />
     }
