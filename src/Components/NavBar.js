@@ -1,6 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Platform,
+  Dimensions,
+  StatusBar
+} from 'react-native';
+
 import Announce from '../Components/Announce';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -8,15 +18,19 @@ const NAVBAR_HEIGHT = 80;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
 class NavBar extends React.Component {
+
+  componentDidMount() {
+    StatusBar.setHidden(false);
+  }
+
   render() {
     const { theme } = this.props;
 
+    StatusBar.setBarStyle(theme.statusbarMode, true);
+
     return (
       <View style={{backgroundColor: theme.background, ...styles.container}}>
-        <View style={{height: Dimensions.get('window').height-NAVBAR_HEIGHT}}>
-          { this.props.children }
-        </View>
-        <View style={{backgroundColor: theme.background, ...styles.navbar}}>
+        <View style={{backgroundColor: theme.foreground, ...styles.navbar}}>
           <TouchableOpacity
             onPress={() => {
               this.props.goBack
@@ -33,6 +47,9 @@ class NavBar extends React.Component {
           </View>
           <View style={{ width: 50 }}/>
         </View>
+        <View style={styles.content}>
+          { this.props.children }
+        </View>
       </View>
     );
   }
@@ -47,27 +64,16 @@ const styles = StyleSheet.create({
     paddingTop: NAVBAR_HEIGHT,
   },
   navbar: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: NAVBAR_HEIGHT,
     paddingTop: STATUS_BAR_HEIGHT,
-
-    // Shadow //
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 5,
-      },
-      shadowOpacity: 0.36,
-      shadowRadius: 6.68,
-      elevation: 3,
-    // --- //
+    elevation: 4,
   },
+  content: {
+    flex:1
+  }
 });
 
 

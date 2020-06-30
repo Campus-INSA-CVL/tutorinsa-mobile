@@ -2,8 +2,8 @@ import { AsyncStorage } from 'react-native';
 
 const LIGHT = {
   name: 'Light',
-  background: 'white',
-  foreground: '#eee',
+  background: '#eee',
+  foreground: 'white',
   separator: 'black',
   title: 'black',
   subtitle: '#999',
@@ -12,12 +12,13 @@ const LIGHT = {
   buttonLabel: 'white',
   eleve: '#1cc88a',
   tuteur: '#4e73df',
+  statusbarMode: 'dark-content',
 }
 
 const DARK = {
   name: 'Dark',
-  background: '#222',
-  foreground: '#333',
+  background: '#333',
+  foreground: '#222',
   separator: 'white',
   title: 'white',
   subtitle: '#8a8a8a',
@@ -26,12 +27,13 @@ const DARK = {
   buttonLabel: 'white',
   eleve: '#1cc88a',
   tuteur: '#4e73df',
+  statusbarMode: 'light-content',
 }
 
 const BLUE = {
   name: 'Dark',
-  background: '#333743',
-  foreground: '#404452',
+  background: '#404452',
+  foreground: '#333743',
   separator: 'white',
   title: 'white',
   subtitle: '#8a8a8a',
@@ -40,6 +42,7 @@ const BLUE = {
   buttonLabel: 'white',
   eleve: '#1cc88a',
   tuteur: '#4e73df',
+  statusbarMode: 'light-content'
 }
 
 const initialState = {

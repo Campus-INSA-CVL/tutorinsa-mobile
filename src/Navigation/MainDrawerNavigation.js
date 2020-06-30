@@ -51,7 +51,7 @@ class MainDrawerNavigation extends React.Component {
         <Drawer.Navigator
           initialRouteName="Posts"
           drawerContent={(props) => {return (
-            <DrawerContentScrollView {...props} style={{backgroundColor: theme.background}}>
+            <DrawerContentScrollView {...props} style={{backgroundColor: theme.foreground}}>
               <DrawerItemList
                 {...props}
                 labelStyle={{

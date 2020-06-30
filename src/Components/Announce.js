@@ -11,7 +11,7 @@ class Announce extends React.Component {
 
     return (
       <View style={{
-        backgroundColor: theme.foreground,
+        backgroundColor: theme.background,
         flex: 1,
         borderRadius: 6,
         overflow: 'hidden',
@@ -24,7 +24,7 @@ class Announce extends React.Component {
 
           ...styles.announce
         }}>
-        <View style={{ backgroundColor: theme.background, ...styles.container }}>
+        <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
           <Text style={{fontSize: 18, fontWeight: 'bold', color: theme.title}}>{this.props.item.subject.name}</Text>
           <Separator backgroundColor={theme.separator}/>
           <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
