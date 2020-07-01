@@ -37,7 +37,7 @@ class Posts extends React.Component {
           <Text style={{ color: theme.subtitle }}>Inscrit {moment(user.createdAt).fromNow()}</Text>
 
           <ThemesCard/>
-          <InformationsCard/>
+          <InformationsCard navigation={this.props.navigation}/>
 
           <TouchableOpacity
             style={{ backgroundColor: theme.button, ...styles.loginButton }}

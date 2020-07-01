@@ -11,6 +11,7 @@ import { SlideFromRightTransition } from './Transitions';
 import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
 import Profile from '../Screens/ProfileScreen';
+import EditInformation from '../Screens/EditInformationScreen';
 
 const PostsStack = createStackNavigator();
 function PostsNavigator() {
@@ -38,6 +39,37 @@ function PostsNavigator() {
     </PostsStack.Navigator>
   );
 }
+
+
+const ProfileStack = createStackNavigator();
+function ProfileNavigator() {
+  return (
+    <ProfileStack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <ProfileStack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: 'Profile',
+        }}
+      />
+      <ProfileStack.Screen
+        name="EditInformation"
+        component={EditInformation}
+        options={{
+          gestureEnabled: true,
+          ...SlideFromRightTransition,
+        }}
+      />
+    </ProfileStack.Navigator>
+  );
+}
+
+
 
 
 const Drawer = createDrawerNavigator();
@@ -75,7 +107,7 @@ class MainDrawerNavigation extends React.Component {
             options={{
               title: "Mon profil",
             }}
-            component={Profile}
+            component={ProfileNavigator}
           />
         </Drawer.Navigator>
       </NavigationContainer>

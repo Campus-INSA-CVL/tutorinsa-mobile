@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text
-} from 'react-native';
-import { connect } from 'react-redux';
-import Separator from '../../Components/Separator';
+import { StyleSheet, View, Text } from 'react-native';
+import NavBar from '../Components/NavBar';
 import { Feather as Icon } from '@expo/vector-icons';
 
 
@@ -17,6 +11,7 @@ function InformationItem(props) {
       borderBottomWidth: 0.2,
       borderColor: theme.text,
       paddingVertical: 10,
+      width: '95%',
       flexDirection: 'row',
       alignItems: 'center',
     }}>
@@ -53,30 +48,6 @@ function _setupItems(user, theme) {
   return items;
 }
 
-
-function InformationsCard(props) {
-  const { user, theme, navigation } = props;
-  const informationsItems = _setupItems(user, theme);
-
-  return (
-    <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: theme.title}}>Informations</Text>
-        <TouchableOpacity
-          style={{
-            marginLeft: 'auto',
-          }}
-          onPress={() => {navigation.navigate("EditInformation", {user, theme})}}
-        >
-          <Text style={{fontSize:15, color: theme.subtitle}}>Modifier</Text>
-        </TouchableOpacity>
-      </View>
-      <Separator backgroundColor={theme.separator}/>
-      { informationsItems }
-    </View>
-  );
-}
-
 function getDepartmentIcon(name) {
   switch (name.toLowerCase()) {
     case 'sti':
@@ -93,21 +64,30 @@ function getDepartmentIcon(name) {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    marginVertical: 20,
-    borderRadius: 10,
-    elevation: 1,
-    width: "85%",
-  },
-});
 
-const mapStateToProps = (store) => {
-  return {
-    user: store.apiFunctions.user,
-    theme: store.themeFunctions.theme,
+class EditInformation extends React.Component {
+  render() {
+    const { user, theme } = this.props.route.params;
+
+    const items = _setupItems(user, theme);
+
+    return (
+      <NavBar navigation={this.props.navigation} title="Modifier les informations" goBack>
+        <View style={{backgroundColor: theme.background, ...styles.container}}>
+          { items }
+        </View>
+      </NavBar>
+    );
   }
 }
 
-export default connect(mapStateToProps)(InformationsCard);
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    paddingTop: 10,
+    alignItems: 'center',
+    paddingHorizontal: "8%"
+  },
+});
+
+export default EditInformation
