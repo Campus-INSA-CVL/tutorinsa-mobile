@@ -19,15 +19,18 @@ class ErrorBoundary extends React.Component {
     return this.state.hasError ?
       <LinearGradient
         style={{flex:1, justifyContent: 'center'}}
-        colors={['#4e73df', '#224abe']}
-        start={{x:0, y:0.1}}
+        colors={['#7196ff', '#224abe', '#324389']}
+        start={{x:0, y:0}}
         end={{x:0, y:1}}
+        locations={[0.05, 0.45, 1]}
       >
         <View style={styles.container}>
-          <Icon name='error-outline' color='#d01427' size={100}/>
           <View style={styles.header}>
-            <Text style={{fontWeight: 'bold', fontSize: 19}}>Une erreur s'est produite,</Text>
-            <Text style={{fontWeight: 'bold', fontSize: 19}}>veuillez redémarrer l'application.</Text>
+            <Icon name='error-outline' color='#d01427' size={100}/>
+            <View style={styles.header}>
+              <Text style={{fontWeight: 'bold', fontSize: 19}}>Une erreur s'est produite,</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 19}}>veuillez redémarrer l'application.</Text>
+            </View>
           </View>
           <View style={styles.content}>
             <Text style={{fontStyle: 'italic'}}>
@@ -49,17 +52,13 @@ const styles = StyleSheet.create({
     width: '85%',
     paddingHorizontal: '5%',
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'space-around',
     padding: '3%'
   },
   header: {
-    padding: 10,
-    marginVertical: 30,
-    borderWidth: 1,
-    borderRadius: 20,
     alignItems: 'center'
   },
   content: {

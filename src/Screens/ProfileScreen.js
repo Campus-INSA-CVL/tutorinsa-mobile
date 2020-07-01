@@ -10,66 +10,34 @@ import {
   Text,
   TouchableOpacity,
   Switch,
+  Button
 } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
 import NavBar from '../Components/NavBar';
 import Separator from '../Components/Separator';
+import InformationsCard from './ProfileCards/InformationsCard';
+import ThemesCard from './ProfileCards/ThemesCard';
 import { MaterialIcons } from '@expo/vector-icons'
 
 class Posts extends React.Component {
   render() {
     const { user, theme } = this.props;
     const fullName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) + " " + user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1)
-    // const fullName = "Jean-Michel De la Bruyère"
 
     return (
       <NavBar title="Mon profil" navigation={this.props.navigation}>
         <ScrollView contentContainerStyle={{ backgroundColor: theme.background, ...styles.container }}>
           <Avatar
             size='xlarge'
-            source={{
-              uri:
-              'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-            }}
+            source={require('../../assets/logo_tutorinsa.png')}
             rounded
             showAccessory
           />
           <Text style={{ fontWeight: 'bold', fontSize: 30, width: "80%", textAlign: 'center', color: theme.title }}>{fullName}</Text>
           <Text style={{ color: theme.subtitle }}>Inscrit {moment(user.createdAt).fromNow()}</Text>
 
-          <View style={{ backgroundColor: theme.foreground, ...styles.card }}>
-            <Text style={{alignSelf: 'center', fontWeight: 'bold', color: theme.title}}>Préférences</Text>
-            <Separator backgroundColor={theme.separator}/>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{alignSelf: 'center', fontSize:15, color: theme.text}}>Toggle theme</Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                // thumbColor={theme.name=="Dark" ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => {
-                  this.props.dispatch({ type: theme.name=="Dark" ? 'THEME_LIGHT' : 'THEME_DARK' });
-                }}
-                value={theme.name == "Dark"}
-              />
-            </View>
-          </View>
-
-          <View style={{ backgroundColor: theme.foreground, ...styles.card }}>
-            <Text style={{alignSelf: 'center', fontWeight: 'bold', color: theme.title}}>Préférences</Text>
-            <Separator backgroundColor={theme.separator}/>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{alignSelf: 'center', fontSize:15, color: theme.text}}>Toggle theme</Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                // thumbColor={theme.name=="Dark" ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => {
-                  this.props.dispatch({ type: theme.name=="Dark" ? 'THEME_LIGHT' : 'THEME_DARK' });
-                }}
-                value={theme.name == "Dark"}
-              />
-            </View>
-          </View>
+          <ThemesCard/>
+          <InformationsCard/>
 
           <TouchableOpacity
             style={{ backgroundColor: theme.button, ...styles.loginButton }}

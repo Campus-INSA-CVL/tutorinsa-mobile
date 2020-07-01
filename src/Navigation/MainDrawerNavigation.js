@@ -56,7 +56,6 @@ class MainDrawerNavigation extends React.Component {
                 {...props}
                 labelStyle={{
                   fontWeight: 'bold',
-                  fontSize: 20,
                   color: theme.title
                 }}
               />

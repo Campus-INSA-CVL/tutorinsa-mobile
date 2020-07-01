@@ -23,7 +23,7 @@ import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 
 const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back']
 const antDesignList = ['calendar', 'clockcircleo']
-const featherList = ['check']
+const featherList = ['check', 'edit-3', 'cpu', 'settings', 'shield', 'mail', 'award']
 
 class LoadingScreen extends React.Component {
   state = {

@@ -31,7 +31,7 @@ const DARK = {
 }
 
 const BLUE = {
-  name: 'Dark',
+  name: 'Blue',
   background: '#404452',
   foreground: '#333743',
   separator: 'white',
@@ -46,7 +46,8 @@ const BLUE = {
 }
 
 const initialState = {
-  theme: LIGHT
+  theme: LIGHT,
+  allThemes: [LIGHT, DARK, BLUE]
 };
 
 function themeFunctions(state = initialState, action) {
