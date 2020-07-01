@@ -5,6 +5,7 @@ import LoadingScreen from '../Screens/LoadingScreen'
 import { LinearGradient } from 'expo-linear-gradient';
 import AuthStackNavigation from '../Navigation/AuthStackNavigation'
 import MainDrawerNavigation from '../Navigation/MainDrawerNavigation'
+import ProfileScreen from '../Screens/ProfileScreen'
 
 class CrossingNavigator extends React.Component {
   state = {
@@ -12,9 +13,6 @@ class CrossingNavigator extends React.Component {
   };
 
   render() {
-    StatusBar.setHidden(false);
-    StatusBar.setBarStyle('light-content', true);
-
     if (this.state.loading) {
       return (
         <LoadingScreen
@@ -25,9 +23,11 @@ class CrossingNavigator extends React.Component {
       );
     }
     else if (this.props.auth_success) {
-      return(<MainDrawerNavigation theme={this.props.theme}/>)
+      return(<MainDrawerNavigation theme={this.props.theme}/>);
     }
     else {
+      StatusBar.setHidden(false);
+      StatusBar.setBarStyle('light-content', true);
       return(
         <LinearGradient
           style={{ flex: 1 }}

@@ -8,53 +8,36 @@ import {
   View,
   ScrollView,
   Text,
-  FlatList,
   TouchableOpacity,
   Switch,
+  Button
 } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
 import NavBar from '../Components/NavBar';
 import Separator from '../Components/Separator';
+import InformationsCard from './ProfileCards/InformationsCard';
+import ThemesCard from './ProfileCards/ThemesCard';
 import { MaterialIcons } from '@expo/vector-icons'
 
 class Posts extends React.Component {
   render() {
     const { user, theme } = this.props;
     const fullName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) + " " + user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1)
-    // const fullName = "Jean-Michel De la Bruyère"
-
-    console.log(user);
 
     return (
       <NavBar title="Mon profil" navigation={this.props.navigation}>
-        <ScrollView contentContainerStyle={{ backgroundColor: theme.foreground, ...styles.container }}>
-        <Avatar
-        size='xlarge'
-        source={{
-          uri:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        }}
-        rounded
-        showAccessory
-        />
-        <Text style={{ fontWeight: 'bold', fontSize: 30, width: "80%", textAlign: 'center', color: theme.title }}>{fullName}</Text>
-        <Text style={{ color: theme.subtitle }}>Inscrit {moment(user.createdAt).fromNow()}</Text>
-          <View style={{ backgroundColor: theme.background, ...styles.content }}>
-            <Text style={{alignSelf: 'center', fontWeight: 'bold', color: theme.title}}>Préférences</Text>
-            <Separator backgroundColor={theme.separator}/>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{alignSelf: 'center', fontSize:15, color: theme.text}}>Toggle theme</Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                // thumbColor={theme.name=="Dark" ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => {
-                  this.props.dispatch({ type: theme.name=="Dark" ? 'THEME_LIGHT' : 'THEME_DARK' });
-                }}
-                value={theme.name == "Dark"}
-              />
-            </View>
-          </View>
+        <ScrollView contentContainerStyle={{ backgroundColor: theme.background, ...styles.container }}>
+          <Avatar
+            size='xlarge'
+            source={require('../../assets/logo_tutorinsa.png')}
+            rounded
+            showAccessory
+          />
+          <Text style={{ fontWeight: 'bold', fontSize: 30, width: "80%", textAlign: 'center', color: theme.title }}>{fullName}</Text>
+          <Text style={{ color: theme.subtitle }}>Inscrit {moment(user.createdAt).fromNow()}</Text>
+
+          <ThemesCard/>
+          <InformationsCard navigation={this.props.navigation}/>
 
           <TouchableOpacity
             style={{ backgroundColor: theme.button, ...styles.loginButton }}
@@ -74,11 +57,10 @@ class Posts extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
     paddingTop: 25,
     alignItems: 'center',
   },
-  content: {
+  card: {
     padding: 10,
     marginVertical: 20,
     borderRadius: 10,

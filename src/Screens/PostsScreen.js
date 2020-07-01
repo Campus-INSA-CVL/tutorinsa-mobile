@@ -1,10 +1,21 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import client, { handleAllErrors } from '../feathers-client';
+import { connect } from 'react-redux';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions
+} from 'react-native';
+
+import { Feather as Icon } from '@expo/vector-icons';
 import Announce from '../Components/Announce';
 import NavBar from '../Components/NavBar';
 import LoadingWheel from '../Components/LoadingWheel';
-import client, { handleAllErrors } from '../feathers-client';
-import { connect } from 'react-redux';
+
+const ADDBUTTON_SIZE = Dimensions.get('window').width/6;
 
 /*
 {
@@ -59,7 +70,7 @@ class Posts extends React.Component {
     }
     else {
       content = <FlatList
-                  contentContainerStyle={{ paddingBottom:20, backgroundColor: theme.foreground }}
+                  contentContainerStyle={{ backgroundColor: theme.background, ...styles.flatlistContainer }}
                   refreshing={this.state.refreshing}
                   onRefresh={() => {
                     client.service('posts').find()
@@ -82,14 +93,12 @@ class Posts extends React.Component {
                         onPress={() => {
                           this.props.navigation.navigate("PostDetails", {post: item, theme: theme})
                         }}
-                        style={{
-                          margin: 20,
-                          marginBottom: 0,
-                        }}
+                        style={styles.itemStyle}
                       >
                         <Announce item={item}/>
                       </TouchableOpacity>
-                    )
+
+                    );
                   }}
                 />
     }
@@ -97,11 +106,37 @@ class Posts extends React.Component {
     return (
       <NavBar title="Posts" navigation={this.props.navigation}>
         { content }
+        <View style={{backgroundColor: theme.foreground, ...styles.addButton, ...styles.overButton}}>
+          <TouchableOpacity style={{backgroundColor: theme.button, ...styles.addButton}}>
+            <Icon name='plus' size={ADDBUTTON_SIZE} color={theme.buttonLabel}/>
+          </TouchableOpacity>
+        </View>
       </NavBar>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  flatlistContainer: {
+    paddingBottom:20+ADDBUTTON_SIZE*2
+  },
+  itemStyle: {
+    margin: 20,
+    marginBottom: 0,
+  },
+  overButton: {
+    position: 'absolute',
+    bottom: ADDBUTTON_SIZE/4,
+    right: ADDBUTTON_SIZE/4,
+  },
+  addButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: ADDBUTTON_SIZE,
+    width: ADDBUTTON_SIZE*1.1,
+    height: ADDBUTTON_SIZE*1.1,
+  }
+});
 
 const mapStateToProps = (store) => {
   return {

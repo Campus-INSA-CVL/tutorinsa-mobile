@@ -39,7 +39,7 @@ class PostDetails extends React.Component {
 
     return (
       <NavBar navigation={this.props.navigation} goBack>
-        <View style={{backgroundColor: theme.foreground, ...styles.container}}>
+        <View style={{backgroundColor: theme.background, ...styles.container}}>
           <Text style={{alignSelf: 'center', fontWeight: 'bold', color: theme.title}}>{post.subject.name}</Text>
         </View>
       </NavBar>

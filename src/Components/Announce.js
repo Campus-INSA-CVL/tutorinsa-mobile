@@ -7,11 +7,17 @@ import { connect } from 'react-redux';
 
 class Announce extends React.Component {
   render() {
-    const { theme } = this.props;
+    let theme;
+    if (this.props.themeOverride) {
+      theme = this.props.themeOverride;
+    }
+    else {
+      theme = this.props.theme;
+    }
 
     return (
       <View style={{
-        backgroundColor: theme.foreground,
+        backgroundColor: theme.background,
         flex: 1,
         borderRadius: 6,
         overflow: 'hidden',
@@ -24,24 +30,24 @@ class Announce extends React.Component {
 
           ...styles.announce
         }}>
-        <View style={{ backgroundColor: theme.background, ...styles.container }}>
-          <Text style={{fontSize: 18, fontWeight: 'bold', color: theme.title}}>{this.props.item.subject.name}</Text>
+        <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
+          <Text style={{paddingLeft: 10, fontWeight: 'bold', color: theme.title}}>{this.props.item.subject.name}</Text>
           <Separator backgroundColor={theme.separator}/>
           <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
             <Icon
               name='calendar'
               color={this.props.item.type=='eleve' ? theme.eleve : theme.tuteur}
-              size={25}
+              size={20}
             />
-            <Text style={{fontSize: 18, color: theme.subtitle}}> {moment(this.props.item.date).local().format('dddd LL')}</Text>
+            <Text style={{paddingLeft: 3, color: theme.subtitle}}> {moment(this.props.item.date).local().format('dddd LL')}</Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Icon
               name='clockcircleo'
               color={this.props.item.type=='eleve' ? theme.eleve : theme.tuteur}
-              size={25}
+              size={20}
             />
-            <Text style={{fontSize: 18, color: theme.subtitle}}> {moment(this.props.item.date).local().format('LT')} - {moment(this.props.item.endAt).local().format('LT')}</Text>
+            <Text style={{paddingLeft: 3, color: theme.subtitle}}> {moment(this.props.item.date).local().format('LT')} - {moment(this.props.item.endAt).local().format('LT')}</Text>
           </View>
         </View>
         </View>
