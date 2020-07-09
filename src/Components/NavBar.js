@@ -38,7 +38,7 @@ class NavBar extends React.Component {
               : this.props.navigation.openDrawer()
             }}
             style={{ width: 50 }}>
-            <MaterialIcons name={this.props.goBack ? 'arrow-back' : 'menu'} color={theme.subtitle /*'#777'*/} size={30} style={{paddingLeft: 20}}/>
+            <MaterialIcons name={this.props.goBack ? 'arrow-back' : 'menu'} color={theme.separator /*'#777'*/} size={30} style={{paddingLeft: 20}}/>
           </TouchableOpacity>
           <View style={{flex: 1, alignItems: 'center'}}>
             <Text style={{fontWeight: 'bold', fontSize: 18, color: theme.title}}>

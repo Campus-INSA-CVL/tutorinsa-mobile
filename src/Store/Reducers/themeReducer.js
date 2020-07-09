@@ -1,15 +1,28 @@
 import { AsyncStorage } from 'react-native';
 
-// Vert + Bleu/violet
-    
 const LIGHT = {
   name: 'Light',
   background: '#eee',
   foreground: 'white',
-  separator: 'black',
+  separator: '#777',
   title: 'black',
   subtitle: '#999',
   text: 'black',
+  button: '#4e73df',
+  buttonLabel: 'white',
+  eleve: '#1cc88a',
+  tuteur: '#4e73df',
+  statusbarMode: 'dark-content',
+}
+
+const BROWN = {
+  name: 'Brown',
+  background: '#322214',
+  foreground: '#4c443c',
+  separator: '#eee',
+  title: '#d4ebff',
+  subtitle: '#7c898b',
+  text: '#93a3b1',
   button: '#4e73df',
   buttonLabel: 'white',
   eleve: '#1cc88a',
@@ -49,7 +62,7 @@ const BLUE = {
 
 const initialState = {
   theme: LIGHT,
-  allThemes: [LIGHT, DARK, BLUE]
+  allThemes: [LIGHT, DARK, BROWN, BLUE]
 };
 
 function themeFunctions(state = initialState, action) {
@@ -58,6 +71,8 @@ function themeFunctions(state = initialState, action) {
       return { ...state, theme: LIGHT };
     case "THEME_DARK":
       return { ...state, theme: DARK };
+    case "THEME_BROWN":
+      return { ...state, theme: BROWN };
     case "THEME_BLUE":
       return { ...state, theme: BLUE };
     default:
