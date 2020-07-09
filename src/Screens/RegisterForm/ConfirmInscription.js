@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Input } from 'react-native-elements';
 import Card from '../../Components/Card';
-import client from '../../feathers-client';
+import client, { handleAllErrors } from '../../feathers-client';
+
 import { connect } from 'react-redux';
 import { MaterialIcons as Icon } from '@expo/vector-icons'
 
@@ -18,7 +19,22 @@ class ConfirmInscription extends React.Component {
           </View>
           <TouchableOpacity
             style={{backgroundColor: '#4e73df', ...styles.nextButton}}
-            onPress={() => {this.props.dispatch({ type: "REGISTER_COMPLETE" })}}
+            onPress={() => {
+              console.log({
+              email: this.props.route.params.email,
+              password: this.props.route.params.password,})
+              client.authenticate({
+                strategy: "local",
+                email: this.props.route.params.email,
+                password: this.props.route.params.password,
+              }).then((res) => {
+                this.props.dispatch({ type: "AUTH_TRUE" });
+                this.props.dispatch({ type: "REGISTER_COMPLETE" });
+                this.props.dispatch({ type: "API_USER", value: res.user });
+              }).catch(e => {
+                this.props.navigation.replace("Error", { error: e.name });
+              });
+            }}
           >
             <Text style={{alignSelf: 'center', color: 'white', fontSize:15}}>Se connecter</Text>
           </TouchableOpacity>

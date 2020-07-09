@@ -25,7 +25,9 @@ class ConfirmPassForm extends React.Component {
          "permissions": this.props.route.params.role,
       }).then(() => {
         this.props.navigation.replace("ConfirmInscription", {
-          firstName: this.props.route.params.firstName
+          firstName: this.props.route.params.firstName,
+          email: this.props.route.params.email,
+          password: this.props.route.params.password,
         });
         this.props.dispatch({ type: "STEPPER_SET", value: 7 });
       }).catch(e => {

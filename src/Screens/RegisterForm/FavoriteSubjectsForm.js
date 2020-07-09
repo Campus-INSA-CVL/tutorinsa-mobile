@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     width:'100%',
     borderRadius: 20,
     paddingHorizontal: 10,
+    marginVertical: 20,
   },
   buttonLabel: {
     alignSelf: 'center',

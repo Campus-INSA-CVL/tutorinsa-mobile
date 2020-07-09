@@ -1,5 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
+// Vert + Bleu/violet
+    
 const LIGHT = {
   name: 'Light',
   background: '#eee',
