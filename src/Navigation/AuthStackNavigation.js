@@ -1,5 +1,5 @@
 import React from 'react';
-import { Easing, Animated, Dimensions } from 'react-native';
+import { Easing, Animated } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 

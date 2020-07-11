@@ -1,4 +1,3 @@
-import { AsyncStorage } from 'react-native';
 
 const LIGHT = {
   name: 'Light',
@@ -27,7 +26,7 @@ const BROWN = {
   buttonLabel: 'white',
   eleve: '#1cc88a',
   tuteur: '#4e73df',
-  statusbarMode: 'dark-content',
+  statusbarMode: 'light-content',
 }
 
 const DARK = {

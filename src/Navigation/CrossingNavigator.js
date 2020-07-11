@@ -1,11 +1,22 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import {
+  View,
+  StatusBar,
+  KeyboardAvoidingView,
+  ScrollView,
+  Dimensions,
+  YellowBox
+} from 'react-native';
 import { connect } from 'react-redux';
 import LoadingScreen from '../Screens/LoadingScreen'
 import { LinearGradient } from 'expo-linear-gradient';
 import AuthStackNavigation from '../Navigation/AuthStackNavigation'
 import MainDrawerNavigation from '../Navigation/MainDrawerNavigation'
 import ProfileScreen from '../Screens/ProfileScreen'
+
+YellowBox.ignoreWarnings([
+  'VirtualizedLists should never be nested', // TODO: Remove if there is another way to do it
+])
 
 class CrossingNavigator extends React.Component {
   state = {
@@ -36,7 +47,11 @@ class CrossingNavigator extends React.Component {
           end={{x:0, y:1}}
           locations={[0.05, 0.45, 1]}
         >
-          <AuthStackNavigation/>
+          <KeyboardAvoidingView behavior="height">
+            <ScrollView contentContainerStyle={{ height: Dimensions.get('window').height}}>
+              <AuthStackNavigation/>
+            </ScrollView>
+          </KeyboardAvoidingView>
         </LinearGradient>
       );
     }

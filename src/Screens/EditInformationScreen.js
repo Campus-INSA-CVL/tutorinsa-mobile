@@ -29,6 +29,7 @@ function _setupItems(user, theme) {
   const data = [
     { name: 'Nom', value: fullName, icon: 'user' },
     { name: 'Email', value: user.email, icon: 'mail' },
+    { name: 'Mot de passe', value: "*********", icon: 'lock' },
     { name: 'Département', value: user.department.name, icon: getDepartmentIcon(user.department.name) },
     { name: 'Année', value: user.year.name, icon: 'award' },
   ]
