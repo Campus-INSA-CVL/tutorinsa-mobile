@@ -23,7 +23,7 @@ import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
 
 const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back']
 const antDesignList = ['calendar', 'clockcircleo']
-const featherList = ['check', 'edit-3', 'cpu', 'settings', 'shield', 'mail', 'award']
+const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'mail', 'award', 'layers', 'help-circle']
 
 class LoadingScreen extends React.Component {
   state = {
@@ -57,7 +57,11 @@ class LoadingScreen extends React.Component {
 
   checkInternet() {
 
-    let auth_false = () => {this.props.dispatch({ type: "AUTH_FALSE" })}
+    let auth_false = () => {
+      this.props.dispatch({ type: "AUTH_FALSE" });
+      this.setState({loadingFinished: true, isServerAvailable: true});
+      this.syncAnimAndLoading();
+    }
 
     client.service('years').find()
           .then((data) => {
@@ -71,14 +75,14 @@ class LoadingScreen extends React.Component {
                             this.setState({isServerAvailable: true});
                             this.syncAnimAndLoading();
                           }).catch((e) => {
-                            handleAllErrors(e, () => {this.checkInternet()}, auth_false);
+                            handleAllErrors(e, () => {this.checkInternet()}, auth_false, true);
                           });
                   }).catch((e) => {
-                    handleAllErrors(e, () => {this.checkInternet()}, auth_false);
+                    handleAllErrors(e, () => {this.checkInternet()}, auth_false, true);
                   });
           })
           .catch((e) => {
-            handleAllErrors(e, () => {this.checkInternet()}, auth_false);
+            handleAllErrors(e, () => {this.checkInternet()}, auth_false, true);
           });
   }
 

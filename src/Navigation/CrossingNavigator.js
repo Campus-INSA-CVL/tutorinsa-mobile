@@ -40,19 +40,19 @@ class CrossingNavigator extends React.Component {
       StatusBar.setHidden(false);
       StatusBar.setBarStyle('light-content', true);
       return(
-        <LinearGradient
-          style={{ flex: 1 }}
-          colors={['#7196ff', '#224abe', '#324389']}
-          start={{x:0, y:0}}
-          end={{x:0, y:1}}
-          locations={[0.05, 0.45, 1]}
-        >
-          <KeyboardAvoidingView behavior="height">
-            <ScrollView contentContainerStyle={{ height: Dimensions.get('window').height}}>
-              <AuthStackNavigation/>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </LinearGradient>
+          <LinearGradient
+            style={{ height: Dimensions.get('window').height }}
+            colors={['#7196ff', '#224abe', '#324389']}
+            start={{x:0, y:0}}
+            end={{x:0, y:1}}
+            locations={[0.05, 0.45, 1]}
+          >
+            <KeyboardAvoidingView behavior="height">
+              <ScrollView contentContainerStyle={{ height: Dimensions.get('window').height}}>
+                <AuthStackNavigation/>
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </LinearGradient>
       );
     }
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import client from '../feathers-client';
+import client, { handleAllErrors } from '../feathers-client';
 import moment from 'moment';
 
 import {
@@ -42,7 +42,7 @@ class Posts extends React.Component {
           <TouchableOpacity
             style={{ backgroundColor: theme.button, ...styles.loginButton }}
             onPress={() => {
-              client.logout();
+              client.logout().catch(handleAllErrors);
               this.props.dispatch({ type: 'AUTH_FALSE' });
               this.props.dispatch({ type: 'API_USER', value: null });
             }}

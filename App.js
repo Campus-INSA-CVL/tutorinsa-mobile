@@ -11,9 +11,7 @@ class App extends React.Component {
     return (
       <ErrorBoundary>
         <Provider store={Store}>
-          <View style={{height: Dimensions.get('window').height}}>
-            <CrossingNavigator/>
-          </View>
+          <CrossingNavigator/>
         </Provider>
       </ErrorBoundary>
     );

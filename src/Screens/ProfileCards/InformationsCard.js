@@ -77,7 +77,7 @@ function InformationsCard(props) {
   );
 }
 
-function getDepartmentIcon(name) {
+export function getDepartmentIcon(name) {
   switch (name.toLowerCase()) {
     case 'sti':
       return 'cpu';
@@ -88,8 +88,11 @@ function getDepartmentIcon(name) {
     case 'mri':
       return 'shield';
 
+    case 'stpi':
+      return 'layers';
+
     default:
-      return 'edit-3';
+      return 'help-circle';
   }
 }
 

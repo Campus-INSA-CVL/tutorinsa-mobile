@@ -4,10 +4,8 @@ import {
   StyleSheet,
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   Platform,
-  Dimensions,
   StatusBar
 } from 'react-native';
 
@@ -28,6 +26,16 @@ class NavBar extends React.Component {
 
     StatusBar.setBarStyle(theme.statusbarMode, true);
 
+    const rightIcon = this.props.validate==null
+    ? (<View style={{ width: 50 }}/>)
+    : (
+      <TouchableOpacity
+        onPress={this.props.validate}
+        style={{ width: 50 }}>
+        <MaterialIcons name={'check'} color='#31a108' size={30} style={{paddingRight: 20}}/>
+      </TouchableOpacity>
+    )
+
     return (
       <View style={{backgroundColor: theme.background, ...styles.container}}>
         <View style={{backgroundColor: theme.foreground, ...styles.navbar}}>
@@ -45,7 +53,7 @@ class NavBar extends React.Component {
               { this.props.title }
             </Text>
           </View>
-          <View style={{ width: 50 }}/>
+          { rightIcon }
         </View>
         <View style={styles.content}>
           { this.props.children }
