@@ -14,7 +14,7 @@ function InformationItem(props) {
   const { theme } = props;
   return(
     <View style={{
-      borderBottomWidth: 0.2,
+      borderBottomWidth: props.borderBottom ? 0.2 : 0,
       borderColor: theme.text,
       paddingVertical: 10,
       flexDirection: 'row',
@@ -47,6 +47,7 @@ function _setupItems(user, theme) {
         icon={item.icon}
         key={item.name + i}
         theme={theme}
+        borderBottom={i!=data.length-1}
       />
     )
   });
@@ -90,6 +91,9 @@ export function getDepartmentIcon(name) {
 
     case 'stpi':
       return 'layers';
+
+    case 'ere':
+      return 'zap';
 
     default:
       return 'help-circle';

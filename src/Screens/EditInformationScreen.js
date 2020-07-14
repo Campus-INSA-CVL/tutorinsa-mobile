@@ -7,19 +7,24 @@ import {
   ScrollView,
   TextInput,
   Animated,
-  Picker,
-  Alert
+  Alert,
 } from 'react-native';
+import Picker from '../Components/Picker';
 import { connect } from 'react-redux';
 import client, { handleAllErrors } from '../feathers-client';
 import NavBar from '../Components/NavBar';
 import { Feather as Icon } from '@expo/vector-icons';
-import { getDepartmentIcon } from './ProfileCards/InformationsCard'
+import { getDepartmentIcon } from './ProfileCards/InformationsCard';
+import { NAVBAR_HEIGHT } from '../Components/NavBar';
 
 function InformationItem(props) {
   const { theme } = props;
   const [ checked, setChecked ] = React.useState(false);
   const [ height ] = React.useState(new Animated.Value(0));
+  const [ opacity ] = React.useState(height.interpolate({
+    inputRange: [0, props.childHeight],
+    outputRange: [0, 1]
+  }))
 
   const itemName = checked
   ? <View style={{marginLeft:10, justifyContent: 'center'}}>
@@ -35,7 +40,7 @@ function InformationItem(props) {
       borderBottomWidth: 0.2,
       borderColor: theme.text,
       paddingVertical: 10,
-      width: '100%',
+      width: '100%'
     }}>
       <View style={{
         backgroundColor: checked ? theme.foreground : 'transparent',
@@ -68,7 +73,7 @@ function InformationItem(props) {
       <Animated.View
         style={{
           height: height,
-          display: checked ? 'flex' : 'none',
+          opacity: opacity,
           backgroundColor: theme.foreground,
           borderBottomLeftRadius: 10,
           borderBottomRightRadius: 10,
@@ -96,15 +101,28 @@ class EditInformation extends React.Component {
     }
   }
 
-  setupPicker(data) {
-    var pickerItems = []
-    for (let i=0; i<data.length; i++) {
-      pickerItems.push(
-        <Picker.Item label={data[i].name} value={data[i]._id} key={"pickerItem_"+i}/>
-      );
-    }
-    return pickerItems;
-  }
+  // componentDidMount() {
+  //   if (this.props.yearsData == null) {
+  //     client.service('years').find()
+  //           .then((data) => {
+  //             this.props.dispatch({ type: "API_YEARS", value: data });
+  //           })
+  //           .catch((e) => {
+  //             this.props.dispatch({ type: "API_YEARS", value: {} });
+  //             handleAllErrors(e, () => {this.componentDidMount()});
+  //           });
+  //   }
+  //
+  //   if (this.props.departmentsData == null) {
+  //     client.service('departments').find()
+  //           .then((data) => {
+  //             this.props.dispatch({ type: "API_DEPARTMENTS", value: data });
+  //           }).catch((e) => {
+  //             this.props.dispatch({ type: "API_DEPARTMENTS", value: {} })
+  //             handleAllErrors(e, () => {this.componentDidMount()});
+  //           });
+  //   }
+  // }
 
   _submit(user) {
     var patchedUser = {}
@@ -118,10 +136,10 @@ class EditInformation extends React.Component {
       patchedUser["lastName"] = this.state.lastName.toLowerCase();
     }
     if (this.state.department != user.department._id) {
-      patchedUser["department"] = this.state.department;
+      patchedUser["departmentId"] = this.state.department;
     }
     if (this.state.year != user.year._id) {
-      patchedUser["year"] = this.state.year;
+      patchedUser["yearId"] = this.state.year;
     }
 
     if (this.state.password != '') {
@@ -187,7 +205,6 @@ class EditInformation extends React.Component {
 
   render() {
     const { user, theme } = this.props.route.params;
-
     return (
       <NavBar
         navigation={this.props.navigation}
@@ -208,17 +225,17 @@ class EditInformation extends React.Component {
             childHeight={100}
           >
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Nouveau prénom</Text>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouveau prénom</Text>
               <TextInput
-                style={styles.input}
+                style={{color: theme.text, ...styles.input}}
                 value={this.state.firstName}
                 onChangeText={text => this.setState({firstName: text})}
               />
             </View>
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Nouveau nom</Text>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouveau nom</Text>
               <TextInput
-                style={styles.input}
+                style={{color: theme.text, ...styles.input}}
                 value={this.state.lastName}
                 onChangeText={text => this.setState({lastName: text})}
               />
@@ -232,9 +249,9 @@ class EditInformation extends React.Component {
             childHeight={50}
           >
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Nouvel email</Text>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouvel email</Text>
               <TextInput
-                style={styles.input}
+                style={{color: theme.text, ...styles.input}}
                 value={this.state.email}
                 onChangeText={text => this.setState({email: text})}
               />
@@ -248,17 +265,17 @@ class EditInformation extends React.Component {
             childHeight={100}
           >
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Nouveau mot de passe</Text>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouveau mot de passe</Text>
               <TextInput
-                style={styles.input}
+                style={{color: theme.text, ...styles.input}}
                 value={this.state.password}
                 onChangeText={text => this.setState({password: text})}
               />
             </View>
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Confirmez le mot de passe</Text>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Confirmez le mot de passe</Text>
               <TextInput
-                style={styles.input}
+                style={{color: theme.text, ...styles.input}}
                 value={this.state.confirmPassword}
                 onChangeText={text => this.setState({confirmPassword: text})}
               />
@@ -271,18 +288,16 @@ class EditInformation extends React.Component {
             theme={theme}
             childHeight={50}
           >
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.inputLabel}>Nouveau département</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouveau département</Text>
               <Picker
-                mode='dropdown'
-                style={{flex: 1}}
+                title='Département'
                 selectedValue={this.state.department}
-                onValueChange={(itemValue, itemIndex) => {
-                  this.setState({department: itemValue})
-                }}
-              >
-                { this.setupPicker(this.props.departmentsData) }
-              </Picker>
+                onValueChange={(value) => this.setState({department: value})}
+                data={this.props.departmentsData}
+                theme={theme}
+                dialogStyle={{marginTop: NAVBAR_HEIGHT}}
+              />
             </View>
           </InformationItem>
           <InformationItem
@@ -293,17 +308,15 @@ class EditInformation extends React.Component {
             childHeight={50}
           >
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.inputLabel}>Nouvelle année</Text>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouvelle année</Text>
               <Picker
-                mode='dropdown'
-                style={{flex: 1}}
+                title='Année'
                 selectedValue={this.state.year}
-                onValueChange={(itemValue, itemIndex) => {
-                  this.setState({year: itemValue})
-                }}
-              >
-                { this.setupPicker(this.props.yearsData) }
-              </Picker>
+                onValueChange={(value) => this.setState({year: value})}
+                data={this.props.yearsData}
+                theme={theme}
+                dialogStyle={{marginTop: NAVBAR_HEIGHT}}
+              />
             </View>
           </InformationItem>
         </ScrollView>

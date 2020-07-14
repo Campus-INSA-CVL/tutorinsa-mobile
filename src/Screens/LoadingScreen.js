@@ -9,7 +9,6 @@ import {
   Alert,
   Platform,
   Text,
-  StatusBar,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -19,11 +18,12 @@ import client, { handleAllErrors } from '../feathers-client';
 import moment from 'moment';
 import 'moment/min/locales'
 import { NativeModules } from 'react-native'
-import { MaterialIcons, AntDesign, Feather } from '@expo/vector-icons'
+import { MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons'
 
 const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back']
 const antDesignList = ['calendar', 'clockcircleo']
-const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'mail', 'award', 'layers', 'help-circle']
+const fontAwesomeList = ['caret-down']
+const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'zap', 'mail', 'award', 'layers', 'help-circle']
 
 class LoadingScreen extends React.Component {
   state = {
@@ -52,15 +52,18 @@ class LoadingScreen extends React.Component {
       list.push(<Feather name={item} key={'fea'+i}/>);
     });
 
+    fontAwesomeList.forEach((item, i) => {
+      list.push(<FontAwesome name={item} key={'fon'+i}/>);
+    });
+
     return list;
   }
 
   checkInternet() {
-
-    let auth_false = () => {
+    let onTokenExpired = () => {
       this.props.dispatch({ type: "AUTH_FALSE" });
-      this.setState({loadingFinished: true, isServerAvailable: true});
-      this.syncAnimAndLoading();
+      this.setState({loadingFinished: true});
+      this.checkInternet();
     }
 
     client.service('years').find()
@@ -75,14 +78,14 @@ class LoadingScreen extends React.Component {
                             this.setState({isServerAvailable: true});
                             this.syncAnimAndLoading();
                           }).catch((e) => {
-                            handleAllErrors(e, () => {this.checkInternet()}, auth_false, true);
+                            handleAllErrors(e, () => {this.checkInternet()}, onTokenExpired);
                           });
                   }).catch((e) => {
-                    handleAllErrors(e, () => {this.checkInternet()}, auth_false, true);
+                    handleAllErrors(e, () => {this.checkInternet()}, onTokenExpired);
                   });
           })
           .catch((e) => {
-            handleAllErrors(e, () => {this.checkInternet()}, auth_false, true);
+            handleAllErrors(e, () => {this.checkInternet()}, onTokenExpired);
           });
   }
 
@@ -127,7 +130,6 @@ class LoadingScreen extends React.Component {
   }
 
   render() {
-    StatusBar.setHidden(true);
     return (
       <View style={{flex: 1}}>
         <View style={{position: 'absolute', top: -500, left: 0}}>

@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, Picker } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Input } from 'react-native-elements';
 import Card from '../../Components/Card';
+import Picker from '../../Components/Picker';
 import LoadingWheel from '../../Components/LoadingWheel';
 import client from '../../feathers-client';
 import { connect } from 'react-redux';
@@ -62,47 +63,43 @@ class InformationsForm extends React.Component {
             <Text style={styles.infoText}>Bonjour {this.props.route.params.firstName} !</Text>
             <View style={{borderWidth: 0.5, borderRadius: 5}}>
               <View style={{flexDirection: 'row'}}>
-                <View style={{ height: 100, width: 100 }}>
+                <View style={{ height: 100, width: 100, marginRight: 10 }}>
                   <Icon name='account-circle' color='#b7b9cc' size={100}/>
                 </View>
                 <View style={{flex:1}}>
                 <Text style={{alignSelf: 'center', fontSize:20, paddingVertical:5, fontWeight: 'bold'}}>Vous êtes</Text>
                   <Picker
-                    mode='dialog'
                     style={{flex: 1}}
                     selectedValue={this.state.role}
-                    onValueChange={(itemValue, itemIndex) => {
-                      this.setState({role: itemValue})
+                    onValueChange={(value) => {
+                      this.setState({role: value})
                     }}
-                  >
-                    { this.setupPicker(this.state.roleData) }
-                  </Picker>
+                    textStyle={{fontSize: 15}}
+                    data={this.state.roleData}
+                  />
                 </View>
               </View>
               <View style={{flexDirection : 'row', paddingHorizontal: 10}}>
                 <Picker
-                  mode='dropdown'
+                  title='Année'
                   style={{flex: 1}}
                   selectedValue={this.state.year}
-                  onValueChange={(itemValue, itemIndex) => {
-                    this.setState({year: itemValue})
+                  onValueChange={(value) => {
+                    this.setState({year: value})
                   }}
-
-                >
-                  <Picker.Item label="Année" value='' key="annee"/>
-                  { this.setupPicker(this.props.yearsData) }
-                </Picker>
+                  textStyle={{fontSize: 15}}
+                  data={this.props.yearsData}
+                />
                 <Picker
-                  mode='dropdown'
+                  title='Département'
                   style={{flex: 1}}
                   selectedValue={this.state.department}
-                  onValueChange={(itemValue, itemIndex) => {
-                    this.setState({department: itemValue})
+                  onValueChange={(value) => {
+                    this.setState({department: value})
                   }}
-                >
-                  <Picker.Item label="Département" value='' key="department"/>
-                  { this.setupPicker(this.props.departmentsData) }
-                </Picker>
+                  textStyle={{fontSize: 15}}
+                  data={this.props.departmentsData}
+                />
               </View>
             </View>
           </View>

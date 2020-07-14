@@ -1,12 +1,13 @@
 import feathers from '@feathersjs/feathers';
 import socketio from '@feathersjs/socketio-client';
 import io from 'socket.io-client';
-import { AsyncStorage, Alert } from 'react-native';
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@feathersjs/authentication-client';
 
 // const API_URL = 'https://tutorinsa-server.herokuapp.com';
-// const API_URL = 'http://192.168.43.10:3030';
-const API_URL = 'http://192.168.1.67:3030';
+const API_URL = 'http://192.168.43.10:3030';
+// const API_URL = 'http://192.168.1.67:3030';
 
 const socket = io(API_URL);
 const client = feathers();
@@ -18,7 +19,19 @@ client.configure(socketio(socket))
 
 export default client
 
-export function handleAllErrors(e, retry, dispatch, hasToken) {
+export function handleAllErrors(e, retry, onTokenExpired) {
+
+  var hasToken = false;
+
+  (async () => {
+    try {
+      const value = await AsyncStorage.getItem('feathers-jwt')
+      hasToken = (value !== null)
+    } catch(e) {
+      console.log('Error reading token : ' + e.name);
+    }
+  })();
+
   console.log('Error catched : '+e.name);
   if (e.name == "Timeout") {
     Alert.alert(
@@ -36,9 +49,9 @@ export function handleAllErrors(e, retry, dispatch, hasToken) {
       (hasToken)
         ? 'Le jeton d\'authentification est expiré, veuillez vous reconnecter.'
         : 'Email ou mot de passe invalide.',
-      (dispatch == undefined)
+      (onTokenExpired == undefined)
         ? [ { text: "D'accord" }, ]
-        : [ { text: "D'accord", onPress: () => {dispatch()} }, ]
+        : [ { text: "D'accord", onPress: () => {onTokenExpired()} }, ]
     );
   }
   else if (e.name == "BadRequest") {

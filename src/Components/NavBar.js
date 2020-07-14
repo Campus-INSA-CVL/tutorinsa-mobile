@@ -12,7 +12,7 @@ import {
 import Announce from '../Components/Announce';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const NAVBAR_HEIGHT = 80;
+export const NAVBAR_HEIGHT = 80;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 
 class NavBar extends React.Component {

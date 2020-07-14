@@ -25,6 +25,7 @@ class CrossingNavigator extends React.Component {
 
   render() {
     if (this.state.loading) {
+      StatusBar.setHidden(true);
       return (
         <LoadingScreen
           onLoadingFinished={() => {

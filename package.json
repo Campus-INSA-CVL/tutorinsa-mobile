@@ -20,6 +20,7 @@
     "expo": "^38.0.0",
     "expo-linear-gradient": "~8.2.1",
     "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
     "react": "16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
     "react-native-elements": "^1.2.7",
@@ -37,8 +38,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "babel-preset-expo": "^8.2.3",
-    "react-dom": "16.11.0"
+    "babel-preset-expo": "^8.2.3"
   },
   "private": true
 }
