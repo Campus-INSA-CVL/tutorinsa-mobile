@@ -12,6 +12,8 @@ import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
 import Profile from '../Screens/ProfileScreen';
 import EditInformation from '../Screens/EditInformationScreen';
+import EditFavoriteSubjects from '../Screens/EditFavoriteSubjectsScreen';
+import EditDifficultSubjects from '../Screens/EditDifficultSubjectsScreen';
 
 const PostsStack = createStackNavigator();
 function PostsNavigator() {
@@ -60,6 +62,22 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="EditInformation"
         component={EditInformation}
+        options={{
+          gestureEnabled: true,
+          ...SlideFromRightTransition,
+        }}
+      />
+      <ProfileStack.Screen
+        name="EditFavoriteSubjects"
+        component={EditFavoriteSubjects}
+        options={{
+          gestureEnabled: true,
+          ...SlideFromRightTransition,
+        }}
+      />
+      <ProfileStack.Screen
+        name="EditDifficultSubjects"
+        component={EditDifficultSubjects}
         options={{
           gestureEnabled: true,
           ...SlideFromRightTransition,

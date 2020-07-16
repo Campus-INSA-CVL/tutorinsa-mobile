@@ -17,6 +17,7 @@ import NavBar from '../Components/NavBar';
 import Separator from '../Components/Separator';
 import InformationsCard from './ProfileCards/InformationsCard';
 import ThemesCard from './ProfileCards/ThemesCard';
+import FavoriteSubjectsCard from './ProfileCards/FavoriteSubjectsCard';
 import { MaterialIcons } from '@expo/vector-icons'
 
 class Posts extends React.Component {
@@ -37,6 +38,7 @@ class Posts extends React.Component {
           <Text style={{ color: theme.subtitle }}>Inscrit {moment(user.createdAt).fromNow()}</Text>
 
           <InformationsCard navigation={this.props.navigation}/>
+          <FavoriteSubjectsCard navigation={this.props.navigation}/>
           <ThemesCard/>
 
           <TouchableOpacity

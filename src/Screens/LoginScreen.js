@@ -9,22 +9,48 @@ import {
   Alert,
   KeyboardAvoidingView
 } from 'react-native';
-import { Input } from 'react-native-elements';
-
+import { CheckBox } from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 import Separator from '../Components/Separator';
 import LoadingWheel from '../Components/LoadingWheel';
+import Input from '../Components/Input';
 import ExternalLink from '../Components/ExternalLink';
 import InternalLink from '../Components/InternalLink';
+import Card from '../Components/Card';
 import client, { handleAllErrors } from '../feathers-client';
+import { Feather as Icon } from '@expo/vector-icons';
 
 class LoginScreen extends React.Component {
-  state = { email: '', password: '', isLoading: false };
+  state = {
+    email: '',
+    password: '',
+    isLoading: false,
+    savePassword: false,
+  };
 
   componentDidMount() {
     this.props.dispatch({ type: 'SET_AUTH_NAVIGATION', value: () => {this.props.navigation}});
   }
 
-  submit(state) {
+  async loadAsyncData() {
+    try {
+      const loginstring = await AsyncStorage.getItem('tutorinsa_loginstring');
+      if(loginstring !== null) {
+        [email, password] = loginstring.split(':');
+        this.setState({email, password: password || ''});
+      }
+    } catch(e) {
+      console.log('Error while reading the login string : ' + e.name);
+    }
+  }
+
+  async submit(state) {
+    const loginstring = this.state.email + (this.state.savePassword ? ':'+this.state.password : '')
+    try {
+      await AsyncStorage.setItem('tutorinsa_loginstring', loginstring)
+    } catch (e) {
+      console.log('Error while saving email/password : ' + e.name);
+    }
     client.authenticate({
       strategy: "local",
       email: state.email,
@@ -42,7 +68,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.content}>
+        <Card style={styles.content} onFocus={() => {this.loadAsyncData()}}>
           <KeyboardAvoidingView
           style={styles.form}
           behavior="height"
@@ -74,6 +100,11 @@ class LoginScreen extends React.Component {
               placeholderTextColor={'#aaa'}
               returnKeyType="done"
             />
+            <CheckBox
+              title="Enregistrer mon mot de passe"
+              checked={this.state.savePassword}
+              onPress={() => {this.setState({savePassword: !this.state.savePassword})}}
+            />
             <TouchableOpacity
               style={styles.loginButton}
               onPress={() => {
@@ -90,7 +121,7 @@ class LoginScreen extends React.Component {
             <InternalLink label="Créer un compte !" target="Register" navigation={this.props.navigation}/>
             <ExternalLink label="Politique RGPD" target="https://www.tutorinsa.insa-cvl.org/politique%20de%20confidentialit%C3%A9.pdf"/>
           </View>
-        </View>
+        </Card>
         <LoadingWheel overlay display={this.state.isLoading} />
       </View>
     );
@@ -106,10 +137,7 @@ const styles = StyleSheet.create({
   content: {
     width: '85%',
     marginVertical: '15%',
-    paddingHorizontal: '5%',
-    borderRadius: 20,
     flex: 1,
-    backgroundColor: 'white'
   },
   form:{
     flex: 4,

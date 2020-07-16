@@ -1,14 +1,12 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, Picker, FlatList } from 'react-native';
-import { Input, CheckBox } from 'react-native-elements';
+import { StyleSheet, View, TouchableOpacity, Text, FlatList } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 import Card from '../../Components/Card';
-import LoadingWheel from '../../Components/LoadingWheel';
 import client from '../../feathers-client';
 import { connect } from 'react-redux';
 
 class DifficultSubjectsForm extends React.Component {
   state={
-    isLoadingSubjects: true,
     difficultSubjects: [],
   }
 

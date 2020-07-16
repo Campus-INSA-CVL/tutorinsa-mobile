@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@feathersjs/authentication-client';
 
 // const API_URL = 'https://tutorinsa-server.herokuapp.com';
-const API_URL = 'http://192.168.43.10:3030';
-// const API_URL = 'http://192.168.1.67:3030';
+// const API_URL = 'http://192.168.43.10:3030';
+const API_URL = 'http://192.168.1.67:3030';
 
 const socket = io(API_URL);
 const client = feathers();
@@ -19,18 +19,7 @@ client.configure(socketio(socket))
 
 export default client
 
-export function handleAllErrors(e, retry, onTokenExpired) {
-
-  var hasToken = false;
-
-  (async () => {
-    try {
-      const value = await AsyncStorage.getItem('feathers-jwt')
-      hasToken = (value !== null)
-    } catch(e) {
-      console.log('Error reading token : ' + e.name);
-    }
-  })();
+export function handleAllErrors(e, retry, onTokenExpired, hasToken) {
 
   console.log('Error catched : '+e.name);
   if (e.name == "Timeout") {

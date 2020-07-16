@@ -55,7 +55,7 @@ class NavBar extends React.Component {
           </View>
           { rightIcon }
         </View>
-        <View style={styles.content}>
+        <View style={[styles.content, this.props.contentStyle]}>
           { this.props.children }
         </View>
       </View>

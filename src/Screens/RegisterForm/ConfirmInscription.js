@@ -20,9 +20,6 @@ class ConfirmInscription extends React.Component {
           <TouchableOpacity
             style={{backgroundColor: '#4e73df', ...styles.nextButton}}
             onPress={() => {
-              console.log({
-              email: this.props.route.params.email,
-              password: this.props.route.params.password,})
               client.authenticate({
                 strategy: "local",
                 email: this.props.route.params.email,
