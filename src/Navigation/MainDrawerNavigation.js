@@ -6,10 +6,11 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SlideFromRightTransition } from './Transitions';
+import { SlideFromRightTransition, FadeTransition } from './Transitions';
 
 import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
+import NewPostScreen from '../Screens/NewPostScreen';
 import Profile from '../Screens/ProfileScreen';
 import EditInformation from '../Screens/EditInformationScreen';
 import EditFavoriteSubjects from '../Screens/EditFavoriteSubjectsScreen';
@@ -36,6 +37,14 @@ function PostsNavigator() {
           headerShown: false,
           gestureEnabled: true,
           ...SlideFromRightTransition,
+        }}
+      />
+      <PostsStack.Screen
+        name="NewPost"
+        component={NewPostScreen}
+        options={{
+          headerShown: false,
+          ...FadeTransition,
         }}
       />
     </PostsStack.Navigator>

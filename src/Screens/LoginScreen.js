@@ -3,10 +3,8 @@ import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
-  Image,
   Text,
   TouchableOpacity,
-  Alert,
   KeyboardAvoidingView
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
@@ -18,7 +16,6 @@ import ExternalLink from '../Components/ExternalLink';
 import InternalLink from '../Components/InternalLink';
 import Card from '../Components/Card';
 import client, { handleAllErrors } from '../feathers-client';
-import { Feather as Icon } from '@expo/vector-icons';
 
 class LoginScreen extends React.Component {
   state = {
@@ -118,7 +115,7 @@ class LoginScreen extends React.Component {
           <Separator backgroundColor='#d1d3e2'/>
           <View style={styles.footer}>
             <ExternalLink label="Mot de passe oublié ?" target="https://www.tutorinsa.insa-cvl.org/forgot-password"/>
-            <InternalLink label="Créer un compte !" target="Register" navigation={this.props.navigation}/>
+            <InternalLink label="Créer un compte !" target="Welcome" navigation={this.props.navigation}/>
             <ExternalLink label="Politique RGPD" target="https://www.tutorinsa.insa-cvl.org/politique%20de%20confidentialit%C3%A9.pdf"/>
           </View>
         </Card>

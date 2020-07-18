@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 
 const LIGHT = {
   name: 'Light',
@@ -65,17 +66,33 @@ const initialState = {
 };
 
 function themeFunctions(state = initialState, action) {
-  switch (action.type) {
-    case "THEME_LIGHT":
+  const actionType = action.type.split('_');
+  if (actionType[0]=='THEME') {
+    saveTheme(actionType[1]);
+
+    switch (action.type) {
+      case "THEME_LIGHT":
       return { ...state, theme: LIGHT };
-    case "THEME_DARK":
+      case "THEME_DARK":
       return { ...state, theme: DARK };
-    case "THEME_BROWN":
+      case "THEME_BROWN":
       return { ...state, theme: BROWN };
-    case "THEME_BLUE":
+      case "THEME_BLUE":
       return { ...state, theme: BLUE };
-    default:
+      default:
       return state;
+    }
+  }
+  else {
+    return state;
+  }
+}
+
+async function saveTheme(theme) {
+  try {
+    await AsyncStorage.setItem('tutorinsa_theme', theme)
+  } catch (e) {
+    console.log('Error while saving the theme : ' + e.name);
   }
 }
 

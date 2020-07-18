@@ -3,19 +3,17 @@ import client, { handleAllErrors } from '../feathers-client';
 import { connect } from 'react-redux';
 import {
   View,
-  Text,
   FlatList,
   TouchableOpacity,
   StyleSheet,
   Dimensions
 } from 'react-native';
-
-import { Feather as Icon } from '@expo/vector-icons';
 import Announce from '../Components/Announce';
-import NavBar from '../Components/NavBar';
+import NavBar, { NAVBAR_HEIGHT } from '../Components/NavBar';
 import LoadingWheel from '../Components/LoadingWheel';
+import { Feather as Icon } from '@expo/vector-icons';
 
-const ADDBUTTON_SIZE = Dimensions.get('window').width/6;
+const ADDBUTTON_SIZE = Dimensions.get('window').width/7;
 
 /*
 {
@@ -107,7 +105,10 @@ class Posts extends React.Component {
       <NavBar title="Posts" navigation={this.props.navigation}>
         { content }
         <View style={{backgroundColor: theme.foreground, ...styles.addButton, ...styles.overButton}}>
-          <TouchableOpacity style={{backgroundColor: theme.button, ...styles.addButton}}>
+          <TouchableOpacity
+            style={{backgroundColor: theme.button, ...styles.addButton}}
+            onPress={() => {this.props.navigation.navigate("NewPost")}}
+          >
             <Icon name='plus' size={ADDBUTTON_SIZE} color={theme.buttonLabel}/>
           </TouchableOpacity>
         </View>
@@ -118,7 +119,8 @@ class Posts extends React.Component {
 
 const styles = StyleSheet.create({
   flatlistContainer: {
-    paddingBottom:20+ADDBUTTON_SIZE*2
+    paddingBottom:150,
+    paddingTop: 10
   },
   itemStyle: {
     margin: 20,
@@ -126,8 +128,9 @@ const styles = StyleSheet.create({
   },
   overButton: {
     position: 'absolute',
-    bottom: ADDBUTTON_SIZE/4,
-    right: ADDBUTTON_SIZE/4,
+    elevation: 5,
+    top: -ADDBUTTON_SIZE/2 -10,
+    right: ADDBUTTON_SIZE/2,
   },
   addButton: {
     alignItems: 'center',
@@ -136,6 +139,7 @@ const styles = StyleSheet.create({
     width: ADDBUTTON_SIZE*1.1,
     height: ADDBUTTON_SIZE*1.1,
   }
+
 });
 
 const mapStateToProps = (store) => {

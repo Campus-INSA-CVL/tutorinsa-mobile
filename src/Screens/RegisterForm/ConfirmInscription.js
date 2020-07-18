@@ -1,13 +1,27 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Input } from 'react-native-elements';
 import Card from '../../Components/Card';
+import { CheckBox } from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 import client, { handleAllErrors } from '../../feathers-client';
 
 import { connect } from 'react-redux';
 import { MaterialIcons as Icon } from '@expo/vector-icons'
 
 class ConfirmInscription extends React.Component {
+  state = {
+    savePassword: false
+  }
+
+  async _saveEmailPass() {
+    const loginstring = this.props.route.params.email + (this.state.savePassword ? ':'+ this.props.route.params.password : '')
+    try {
+      await AsyncStorage.setItem('tutorinsa_loginstring', loginstring)
+    } catch (e) {
+      console.log('Error while saving email/password : ' + e.name);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -17,9 +31,15 @@ class ConfirmInscription extends React.Component {
             <Text style={{fontSize:20, paddingTop:10, fontWeight: 'bold'}}>Bienvenue {this.props.route.params.firstName} !</Text>
             <Text style={{fontSize:15, paddingTop:10}}>Votre compte a été créé avec succès</Text>
           </View>
+          <CheckBox
+            title="Enregistrer mon mot de passe"
+            checked={this.state.savePassword}
+            onPress={() => {this.setState({savePassword: !this.state.savePassword})}}
+          />
           <TouchableOpacity
             style={{backgroundColor: '#4e73df', ...styles.nextButton}}
             onPress={() => {
+              this._saveEmailPass();
               client.authenticate({
                 strategy: "local",
                 email: this.props.route.params.email,

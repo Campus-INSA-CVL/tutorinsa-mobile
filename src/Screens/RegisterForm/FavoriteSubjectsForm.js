@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, FlatList } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Card from '../../Components/Card';
-import client from '../../feathers-client';
 import { connect } from 'react-redux';
 
 class FavoriteSubjectsForm extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Linking, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 class InternalLink extends React.Component {
   render() {

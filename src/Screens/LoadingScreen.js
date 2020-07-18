@@ -1,29 +1,28 @@
 import React from 'react'
 import {
-  StyleSheet,
   View,
   Animated,
   Easing,
   Dimensions,
   Image,
-  Alert,
   Platform,
-  Text,
 } from 'react-native';
 
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import client, { handleAllErrors } from '../feathers-client';
 
 import moment from 'moment';
 import 'moment/min/locales'
 import { NativeModules } from 'react-native'
-import { MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons'
 
-const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back']
-const antDesignList = ['calendar', 'clockcircleo']
-const fontAwesomeList = ['caret-down']
-const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'zap', 'mail', 'award', 'layers', 'help-circle']
+const materialCommuIconsList = ['heart', 'heart-broken', 'circle'];
+const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back'];
+const antDesignList = ['calendar', 'clockcircleo'];
+const fontAwesomeList = ['caret-down'];
+const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'zap', 'mail', 'award', 'layers', 'help-circle'];
 
 class LoadingScreen extends React.Component {
   state = {
@@ -44,6 +43,10 @@ class LoadingScreen extends React.Component {
       list.push(<AntDesign name={item} key={'ant'+i}/>);
     });
 
+    materialCommuIconsList.forEach((item, i) => {
+      list.push(<MaterialCommunityIcons name={item} key={'matcomm'+i}/>);
+    });
+
     materialIconsList.forEach((item, i) => {
       list.push(<MaterialIcons name={item} key={'mat'+i}/>);
     });
@@ -57,6 +60,17 @@ class LoadingScreen extends React.Component {
     });
 
     return list;
+  }
+
+  async loadTheme() {
+    try {
+      const theme = await AsyncStorage.getItem('tutorinsa_theme');
+      if(theme !== null) {
+        this.props.dispatch({ type: "THEME_"+theme });
+      }
+    } catch(e) {
+      console.log('Error while loading the theme : ' + e.name);
+    }
   }
 
   checkInternet() {
@@ -108,6 +122,7 @@ class LoadingScreen extends React.Component {
     });
 
     this.checkInternet();
+    this.loadTheme();
 
     Animated.timing(
       this.size,

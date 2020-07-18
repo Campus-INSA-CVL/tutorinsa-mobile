@@ -18,12 +18,18 @@ function SubjectItem(props) {
       width: '90%',
       alignSelf: 'center',
       paddingVertical: 5,
-      paddingLeft: 30,
+      paddingLeft: 5,
       flexDirection: 'row',
       alignItems: 'center',
     }}>
-      <View style={{marginLeft:10}}>
-        <Text style={{fontSize: 15, color: theme.text}}>{props.name}</Text>
+      <View style={{marginLeft:10, flexDirection: 'row', alignItems: 'center'}}>
+        <Icon
+          name='circle'
+          size={10}
+          color={theme.text}
+          style={{marginRight: 15}}
+        />
+        <Text style={{fontSize: 15, color: theme.text, flex: 1}}>{props.name}</Text>
       </View>
     </View>
   );
@@ -45,7 +51,7 @@ function _setupItems(data, theme) {
 }
 
 
-function FavoriteSubjectsCard(props) {
+function SubjectsCard(props) {
   const { user, theme, navigation } = props;
   const favoriteSubjectsItems = _setupItems(user.favoriteSubjects, theme);
   const difficultSubjectsItems = _setupItems(user.difficultSubjects, theme);
@@ -54,8 +60,8 @@ function FavoriteSubjectsCard(props) {
     <>
       <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <Icon name='heart' size={25} color='#f72c1e' style={{marginRight: 10}}/>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: theme.title}}>Matières préférées</Text>
-          <Icon name='heart' size={25} color='#f72c1e' style={{marginHorizontal: 10}}/>
           <TouchableOpacity
             style={{marginLeft: 'auto'}}
             onPress={() => {navigation.navigate("EditFavoriteSubjects")}}
@@ -68,8 +74,8 @@ function FavoriteSubjectsCard(props) {
       </View>
       <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <Icon name='heart-broken' size={25} color='#c27400' style={{marginRight: 10}}/>
           <Text style={{fontSize: 20, fontWeight: 'bold', color: theme.title}}>Matières difficiles</Text>
-          <Icon name='heart-broken' size={25} color='#c27400' style={{marginHorizontal: 10}}/>
           <TouchableOpacity
             style={{marginLeft: 'auto'}}
             onPress={() => {navigation.navigate("EditDifficultSubjects")}}
@@ -101,4 +107,4 @@ const mapStateToProps = (store) => {
   }
 }
 
-export default connect(mapStateToProps)(FavoriteSubjectsCard);
+export default connect(mapStateToProps)(SubjectsCard);

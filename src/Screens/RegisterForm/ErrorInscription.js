@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Input } from 'react-native-elements';
 import Card from '../../Components/Card';
-import client from '../../feathers-client';
 import { MaterialIcons as Icon } from '@expo/vector-icons'
 
 class ErrorInscription extends React.Component {

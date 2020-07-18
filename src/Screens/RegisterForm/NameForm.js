@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Input } from 'react-native-elements';
-import Dots from '../../Components/Dots';
 import Card from '../../Components/Card';
 
 class NameForm extends React.Component {

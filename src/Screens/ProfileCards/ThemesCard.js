@@ -27,6 +27,7 @@ class ThemesCard extends React.Component {
           <Separator backgroundColor={theme.separator}/>
         </View>
         <Carousel
+          firstItem={this.props.allThemes.findIndex((element) => element===theme)}
           data={this.props.allThemes}
           renderItem={({item,index}) => {
             return (

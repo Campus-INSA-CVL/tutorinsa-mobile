@@ -1,10 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Input } from 'react-native-elements';
 import Card from '../../Components/Card';
 import Picker from '../../Components/Picker';
-import LoadingWheel from '../../Components/LoadingWheel';
-import client from '../../feathers-client';
 import { connect } from 'react-redux';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
 
