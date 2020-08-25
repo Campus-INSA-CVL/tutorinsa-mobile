@@ -41,7 +41,7 @@ function _setupItems(data, theme) {
     items.push(
       <SubjectItem
         key={'sujitem_' + i}
-        name={item.name}
+        name={item.name.charAt(0).toUpperCase() + item.name.substring(1)}
         theme={theme}
         borderBottom={i!=data.length-1}
       />
@@ -60,7 +60,9 @@ function SubjectsCard(props) {
     <>
       <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <Icon name='heart' size={25} color='#f72c1e' style={{marginRight: 10}}/>
+          {
+            <Icon name='heart' size={25} color='#f72c1e' style={{marginRight: 10}}/>
+          }
           <Text style={{fontSize: 20, fontWeight: 'bold', color: theme.title}}>Matières préférées</Text>
           <TouchableOpacity
             style={{marginLeft: 'auto'}}
@@ -74,7 +76,9 @@ function SubjectsCard(props) {
       </View>
       <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <Icon name='heart-broken' size={25} color='#c27400' style={{marginRight: 10}}/>
+          {
+            <Icon name='heart-broken' size={25} color='#4e73df' style={{marginRight: 10}}/>
+          }
           <Text style={{fontSize: 20, fontWeight: 'bold', color: theme.title}}>Matières difficiles</Text>
           <TouchableOpacity
             style={{marginLeft: 'auto'}}

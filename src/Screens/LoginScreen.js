@@ -35,6 +35,9 @@ class LoginScreen extends React.Component {
       if(loginstring !== null) {
         [email, password] = loginstring.split(':');
         this.setState({email, password: password || ''});
+        if (password) {
+          this.setState({ savePassword: true })
+        }
       }
     } catch(e) {
       console.log('Error while reading the login string : ' + e.name);

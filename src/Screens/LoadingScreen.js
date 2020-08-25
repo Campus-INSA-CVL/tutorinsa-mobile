@@ -16,13 +16,14 @@ import client, { handleAllErrors } from '../feathers-client';
 import moment from 'moment';
 import 'moment/min/locales'
 import { NativeModules } from 'react-native'
-import { MaterialCommunityIcons, MaterialIcons, AntDesign, Feather, FontAwesome } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, AntDesign, Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 
 const materialCommuIconsList = ['heart', 'heart-broken', 'circle'];
 const materialIconsList = ['menu', 'account-circle', 'error-outline', 'check', 'arrow-back'];
-const antDesignList = ['calendar', 'clockcircleo'];
+const antDesignList = ['calendar', 'clockcircleo', 'home'];
 const fontAwesomeList = ['caret-down'];
-const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'zap', 'mail', 'award', 'layers', 'help-circle'];
+const fontAwesome5List = ['chalkboard-teacher', 'home', 'calendar-alt', 'clock', ];
+const featherList = ['x', 'check', 'edit', 'cpu', 'settings', 'shield', 'zap', 'mail', 'award', 'layers', 'help-circle', 'map'];
 
 class LoadingScreen extends React.Component {
   state = {
@@ -59,6 +60,10 @@ class LoadingScreen extends React.Component {
       list.push(<FontAwesome name={item} key={'fon'+i}/>);
     });
 
+    fontAwesome5List.forEach((item, i) => {
+      list.push(<FontAwesome5 name={item} key={'fon5'+i}/>);
+    });
+
     return list;
   }
 
@@ -82,13 +87,31 @@ class LoadingScreen extends React.Component {
 
     client.service('years').find()
           .then((data) => {
-            this.props.dispatch({ type: "API_YEARS", value: data });
+            this.props.dispatch({
+              type: "API_YEARS",
+              value: data.map(year => ({
+                "_id": year._id,
+                "name": year.name.toUpperCase()
+              }))
+            });
             client.service('departments').find()
                   .then((data) => {
-                    this.props.dispatch({ type: "API_DEPARTMENTS", value: data });
+                    this.props.dispatch({
+                      type: "API_DEPARTMENTS",
+                      value: data.map(department => ({
+                        "_id": department._id,
+                        "name": department.name.toUpperCase()
+                      }))
+                    });
                     client.service('subjects').find()
                           .then((data) => {
-                            this.props.dispatch({ type: "API_SUBJECTS", value: data });
+                            this.props.dispatch({
+                              type: "API_SUBJECTS",
+                              value: data.map(subject => ({
+                                "_id": subject._id,
+                                "name": subject.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ')
+                              }))
+                            });
                             this.setState({isServerAvailable: true});
                             this.syncAnimAndLoading();
                           }).catch((e) => {

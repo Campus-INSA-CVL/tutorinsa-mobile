@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, StatusBar } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons as Icon } from '@expo/vector-icons'
 
@@ -16,6 +16,7 @@ class ErrorBoundary extends React.Component {
   }
 
   render () {
+    StatusBar.setBarStyle('light-content', true)
     return this.state.hasError ?
       <LinearGradient
         style={{flex:1, justifyContent: 'center'}}

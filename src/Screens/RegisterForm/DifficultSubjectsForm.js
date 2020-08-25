@@ -20,7 +20,7 @@ class DifficultSubjectsForm extends React.Component {
               keyExtractor={(item) => item._id}
               renderItem={({item}) =>
                 <CheckBox
-                  title={item.name}
+                  title={item.name.split(' ').map(x => x.charAt(0).toUpperCase()+x.slice(1)).join(' ')}
                   iconRight
                   checkedIcon=<View style={{height: 31}}/>
                   uncheckedIcon=<View style={{height: 31}}/>

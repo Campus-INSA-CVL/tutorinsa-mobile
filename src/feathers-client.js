@@ -7,7 +7,7 @@ import auth from '@feathersjs/authentication-client';
 
 // const API_URL = 'https://tutorinsa-server.herokuapp.com';
 const API_URL = 'http://192.168.43.10:3030';
-// const API_URL = 'http://192.168.1.67:3030';
+// const API_URL = 'http://192.168.1.88:3030';
 
 const socket = io(API_URL);
 const client = feathers();

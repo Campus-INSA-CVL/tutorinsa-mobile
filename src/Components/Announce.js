@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 class Announce extends React.Component {
   render() {
     let theme;
+    const subject = this.props.item.subject.name.charAt(0).toUpperCase() + this.props.item.subject.name.slice(1)
+
     if (this.props.themeOverride) {
       theme = this.props.themeOverride;
     }
@@ -31,7 +33,7 @@ class Announce extends React.Component {
           ...styles.announce
         }}>
         <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
-          <Text style={{paddingLeft: 10, fontWeight: 'bold', color: theme.title}}>{this.props.item.subject.name}</Text>
+          <Text style={{paddingLeft: 10, fontWeight: 'bold', color: theme.title}}>{subject}</Text>
           <Separator backgroundColor={theme.separator}/>
           <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
             <Icon

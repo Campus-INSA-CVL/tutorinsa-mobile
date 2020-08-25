@@ -1,4 +1,4 @@
-import { forFade, CardStyleInterpolators } from '@react-navigation/stack';
+import { forFade, CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack';
 import { Easing, Animated } from 'react-native';
 
 const { add, multiply } = Animated;
@@ -144,4 +144,12 @@ export const SlideFromBottomTransition = {
       },
     };
   },
+};
+
+export const PresentTransition = {
+  transitionSpec: {
+    open: TransitionSpecs.FadeInFromBottomAndroidSpec,
+    close: TransitionSpecs.FadeOutToBottomAndroidSpec,
+  },
+  cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
 };

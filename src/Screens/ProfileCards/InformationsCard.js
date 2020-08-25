@@ -34,8 +34,8 @@ function _setupItems(user, theme) {
   const data = [
     { name: 'Nom', value: fullName, icon: 'user' },
     { name: 'Email', value: user.email, icon: 'mail' },
-    { name: 'Département', value: user.department.name, icon: getDepartmentIcon(user.department.name) },
-    { name: 'Année', value: user.year.name, icon: 'award' },
+    { name: 'Département', value: user.department.name.toUpperCase(), icon: getDepartmentIcon(user.department.name) },
+    { name: 'Année', value: user.year.name.toUpperCase(), icon: 'award' },
   ]
 
   let items = [];
@@ -80,20 +80,23 @@ function InformationsCard(props) {
 
 export function getDepartmentIcon(name) {
   switch (name.toLowerCase()) {
-    case 'sti':
-      return 'cpu';
+    case 'stpi':
+      return 'layers';
 
     case 'gsi':
       return 'settings';
 
+    case 'sti':
+      return 'cpu';
+
     case 'mri':
       return 'shield';
 
-    case 'stpi':
-      return 'layers';
-
     case 'ere':
       return 'zap';
+
+    case 'enp':
+      return 'map';
 
     default:
       return 'help-circle';

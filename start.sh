@@ -1,3 +1,3 @@
 start powershell
-cd ../tutorinsa-server/server/
+cd ../tutorinsa-server-2.0.0/
 npm run dev

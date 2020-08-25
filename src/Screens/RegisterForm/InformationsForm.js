@@ -42,16 +42,6 @@ class InformationsForm extends React.Component {
     }
   }
 
-  setupPicker(data) {
-    var pickerItems = []
-    for (let i=0; i<data.length; i++) {
-      pickerItems.push(
-        <Picker.Item label={data[i].name} value={data[i]._id} key={"pickerItem_"+i}/>
-      );
-    }
-    return pickerItems;
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -86,6 +76,7 @@ class InformationsForm extends React.Component {
                   }}
                   textStyle={{fontSize: 15}}
                   data={this.props.yearsData}
+                  toUpperCase={true}
                 />
                 <Picker
                   title='Département'
@@ -96,6 +87,7 @@ class InformationsForm extends React.Component {
                   }}
                   textStyle={{fontSize: 15}}
                   data={this.props.departmentsData}
+                  toUpperCase={true}
                 />
               </View>
             </View>

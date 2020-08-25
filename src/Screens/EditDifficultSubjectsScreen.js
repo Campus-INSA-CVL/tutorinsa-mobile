@@ -52,7 +52,7 @@ class EditDifficultSubjectsScreen extends React.Component {
     return (
       <NavBar
         navigation={this.props.navigation}
-        title="Modifier les matières préférées"
+        title="Modifier les matières difficiles"
         goBack
         validate={() => {this._submit()}}
       >

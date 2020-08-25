@@ -41,7 +41,7 @@ class Picker extends React.Component {
               flexDirection: 'row'
             }}
           >
-            <Text style={{color: theme.text}}>{item.name}</Text>
+            <Text style={{color: theme.text}}>{this.props.toUpperCase ? item.name.toUpperCase() : item.name}</Text>
             {
               (this.props.selectedValue==item._id)
               ? <Feather
@@ -68,13 +68,17 @@ class Picker extends React.Component {
       <TouchableOpacity
         onPress={() => {
           this.setState({isOpened: true});
-          StatusBar.setHidden(true);
+          StatusBar.setHidden(this.props.hideStatusBar);
         }}
         style={props.style}
       >
         <View style={styles.container}>
           <Text style={{color: theme.text, ...props.textStyle}}>
-            {props.selectedValue=='' ? props.title : this.data[props.selectedValue]}
+            {
+              (props.selectedValue=='')
+              ? props.title
+              : this.props.toUpperCase ? this.data[props.selectedValue].toUpperCase() : this.data[props.selectedValue]
+            }
           </Text>
           <FontAwesome name='caret-down' size={20} color={theme.text} style={styles.caret}/>
         </View>
@@ -116,6 +120,7 @@ Picker.propTypes = {
   data: PropTypes.array.isRequired,
   title: PropTypes.string,
   theme: PropTypes.object,
+  hideStatusBar: PropTypes.bool,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   dialogStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -129,7 +134,8 @@ Picker.defaultProps = {
     separator: '#777777',
   },
   title: '',
-  selectedValue: ''
+  selectedValue: '',
+  hideStatusBar: true
 };
 
 const styles = StyleSheet.create({

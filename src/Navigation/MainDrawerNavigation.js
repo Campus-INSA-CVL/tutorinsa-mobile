@@ -6,7 +6,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SlideFromRightTransition, FadeTransition } from './Transitions';
+import { SlideFromRightTransition, PresentTransition } from './Transitions';
 
 import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
@@ -44,7 +44,7 @@ function PostsNavigator() {
         component={NewPostScreen}
         options={{
           headerShown: false,
-          ...FadeTransition,
+          ...PresentTransition,
         }}
       />
     </PostsStack.Navigator>

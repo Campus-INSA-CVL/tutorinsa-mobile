@@ -283,7 +283,7 @@ class EditInformation extends React.Component {
           </InformationItem>
           <InformationItem
             name='Département'
-            value={user.department.name}
+            value={user.department.name.toUpperCase()}
             icon={getDepartmentIcon(user.department.name)}
             theme={theme}
             childHeight={50}
@@ -296,13 +296,13 @@ class EditInformation extends React.Component {
                 onValueChange={(value) => this.setState({department: value})}
                 data={this.props.departmentsData}
                 theme={theme}
-                dialogStyle={{marginTop: NAVBAR_HEIGHT}}
+                hideStatusBar={false}
               />
             </View>
           </InformationItem>
           <InformationItem
             name='Année'
-            value={user.year.name}
+            value={user.year.name.toUpperCase()}
             icon='award'
             theme={theme}
             childHeight={50}
@@ -315,7 +315,7 @@ class EditInformation extends React.Component {
                 onValueChange={(value) => this.setState({year: value})}
                 data={this.props.yearsData}
                 theme={theme}
-                dialogStyle={{marginTop: NAVBAR_HEIGHT}}
+                hideStatusBar={false}
               />
             </View>
           </InformationItem>
