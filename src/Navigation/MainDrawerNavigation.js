@@ -11,6 +11,7 @@ import { SlideFromRightTransition, PresentTransition } from './Transitions';
 import Posts from '../Screens/PostsScreen';
 import PostDetails from '../Screens/PostDetailsScreen';
 import NewPostScreen from '../Screens/NewPostScreen';
+import FilterPostsScreen from '../Screens/FilterPostsScreen';
 import Profile from '../Screens/ProfileScreen';
 import EditInformation from '../Screens/EditInformationScreen';
 import EditFavoriteSubjects from '../Screens/EditFavoriteSubjectsScreen';
@@ -21,20 +22,21 @@ function PostsNavigator() {
   return (
     <PostsStack.Navigator
       initialRouteName="Posts"
+      screenOptions={{
+        headerShown: false
+      }}
     >
       <PostsStack.Screen
         name="Posts"
         component={Posts}
         options={{
-          title: 'Posts',
-          headerShown: false
+          title: 'Posts'
         }}
       />
       <PostsStack.Screen
         name="PostDetails"
         component={PostDetails}
         options={{
-          headerShown: false,
           gestureEnabled: true,
           ...SlideFromRightTransition,
         }}
@@ -43,7 +45,13 @@ function PostsNavigator() {
         name="NewPost"
         component={NewPostScreen}
         options={{
-          headerShown: false,
+          ...PresentTransition,
+        }}
+      />
+      <PostsStack.Screen
+        name="FilterPosts"
+        component={FilterPostsScreen}
+        options={{
           ...PresentTransition,
         }}
       />

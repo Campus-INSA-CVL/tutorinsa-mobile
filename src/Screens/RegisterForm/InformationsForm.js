@@ -8,24 +8,21 @@ import { MaterialIcons as Icon } from '@expo/vector-icons';
 class InformationsForm extends React.Component {
   state={
     roleData: [
-      {'_id': 'etudiant', 'name': 'Un étudiant'},
+      {'_id': 'eleve', 'name': 'Un étudiant'},
       {'_id': 'tuteur', 'name': 'Un tuteur'},
       {'_id': 'both', 'name': 'Les deux'}
     ],
     year: '',
     department: '',
-    role: 'etudiant',
+    role: 'eleve',
   }
 
   _roleToPermissions() {
-    if (this.state.role=='etudiant') {
-      return ["eleve"];
-    }
-    else if (this.state.role=='etudiant') {
-      return ["tuteur"];
+    if (this.state.role=='both') {
+      return ["eleve", "tuteur"];
     }
     else {
-      return ["eleve", "tuteur"];
+      return Array.from(this.state.role)
     }
   }
 
@@ -45,7 +42,7 @@ class InformationsForm extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card>
+        <Card style={styles.card}>
           <View style={styles.form}>
             <Text style={styles.infoText}>Bonjour {this.props.route.params.firstName} !</Text>
             <View style={{borderWidth: 0.5, borderRadius: 5}}>
@@ -110,6 +107,10 @@ class InformationsForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+  },
+  card: {
+    marginVertical: '5%',
+    borderRadius: 40,
   },
   infoText: {
     alignSelf: 'center',

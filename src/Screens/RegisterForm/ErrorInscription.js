@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
   },
   card: {
     justifyContent: 'space-around',
+    marginVertical: '5%',
+    borderRadius: 40,
   },
   content: {
     alignItems: 'center',

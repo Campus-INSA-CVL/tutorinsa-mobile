@@ -1,5 +1,13 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, StatusBar } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+  FlatList,
+  Dimensions
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { FontAwesome, Feather } from '@expo/vector-icons';
 import { Overlay } from 'react-native-elements';
@@ -72,7 +80,7 @@ class Picker extends React.Component {
         }}
         style={props.style}
       >
-        <View style={styles.container}>
+        <View style={{...styles.container, ...props.containerStyle}}>
           <Text style={{color: theme.text, ...props.textStyle}}>
             {
               (props.selectedValue=='')
@@ -98,6 +106,7 @@ class Picker extends React.Component {
                   color: theme.text,
                   fontWeight: 'bold',
                   fontSize: 20,
+                  height: 30,
                   borderBottomWidth: 1,
                   borderColor: theme.separator,
                   alignSelf: 'center'
@@ -106,7 +115,53 @@ class Picker extends React.Component {
                 </Text>
               : null
             }
-            {this._setupPicker(theme)}
+            <FlatList
+              data={this.props.data}
+              style={{
+                height: (this.props.data.length < (Dimensions.get('window').height*0.8
+                                                  -(props.title!='' ? 30 : 0))/35)
+                        ? undefined
+                        : Dimensions.get('window').height*0.8}}
+              renderItem={({ item, index }) => {
+                return (
+                  <View
+                    key={item._id}
+                    style={{
+                      borderColor: theme.separator,
+                      borderBottomWidth: index==this.props.data.length-1 ? 0 : 0.5,
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.onValueChange(item._id);
+                        this.setState({isOpened: false});
+                        StatusBar.setHidden(false);
+                      }}
+                      style={{
+                        width: '100%',
+                        height: 35,
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        paddingHorizontal: 5
+                      }}
+                    >
+                      <Text style={{color: theme.text}}>{this.props.toUpperCase ? item.name.toUpperCase() : item.name}</Text>
+                      {
+                        (this.props.selectedValue==item._id)
+                        ? <Feather
+                            name='check'
+                            size={20}
+                            color={theme.separator}
+                            style={{marginLeft: 'auto'}}
+                          />
+                        : null
+                      }
+                    </TouchableOpacity>
+                  </View>
+                )
+              }}
+              keyExtractor={item => item._id}
+            />
           </View>
         </Overlay>
       </TouchableOpacity>
@@ -141,11 +196,13 @@ Picker.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginVertical: 10,
+    height: 35,
+    alignItems: 'center',
+    paddingHorizontal: 5,
     justifyContent: 'space-between',
   },
   caret: {
-    marginHorizontal: 20
+    marginLeft: 10
   },
   overlay: {
     height: undefined,

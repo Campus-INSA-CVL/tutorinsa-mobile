@@ -98,7 +98,7 @@ class EditDifficultSubjectsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
-    paddingHorizontal: "8%"
+    paddingHorizontal: 5
   },
 });
 

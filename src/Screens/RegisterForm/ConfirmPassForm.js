@@ -11,8 +11,8 @@ class ConfirmPassForm extends React.Component {
     passwordError: false,
   }
 
-  _submit(state) {
-    if (state.confirmPassword=='' || state.confirmPassword==this.props.route.params.password) {
+  _submit = () => {
+    if (this.state.confirmPassword=='' || this.state.confirmPassword==this.props.route.params.password) {
       client.service('users').create({
          "email": this.props.route.params.email,
          "password": this.props.route.params.password,
@@ -51,7 +51,7 @@ class ConfirmPassForm extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card>
+        <Card style={styles.card}>
           <View style={styles.form}>
             <Text style={styles.infoText}>Promis, c'est la dernière étape</Text>
             <Input
@@ -83,6 +83,10 @@ class ConfirmPassForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+  },
+  card: {
+    marginVertical: '5%',
+    borderRadius: 40,
   },
   form: {
     flex:1,

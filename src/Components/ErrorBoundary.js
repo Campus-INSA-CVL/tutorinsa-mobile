@@ -30,7 +30,8 @@ class ErrorBoundary extends React.Component {
             <Icon name='error-outline' color='#d01427' size={100}/>
             <View style={styles.header}>
               <Text style={{fontWeight: 'bold', fontSize: 19}}>Une erreur s'est produite,</Text>
-              <Text style={{fontWeight: 'bold', fontSize: 19}}>veuillez redémarrer l'application.</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 19}}>veuillez redémarrer</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 19}}>l'application.</Text>
             </View>
           </View>
           <View style={styles.content}>
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     width: '85%',
     paddingHorizontal: '5%',
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 40,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'space-around',

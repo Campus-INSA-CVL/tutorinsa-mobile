@@ -21,33 +21,56 @@ class NavBar extends React.Component {
     StatusBar.setHidden(false);
   }
 
+  getIconName() {
+    if (this.props.goBack) {
+      return 'arrow-back'
+    }
+    else if (this.props.close) {
+      return 'close'
+    }
+    else return 'menu'
+  }
+
   render() {
     const { theme } = this.props;
 
     StatusBar.setBarStyle(theme.statusbarMode, true);
 
-    const rightIcon = this.props.validate==null
-    ? (<View style={{ width: 50 }}/>)
-    : (
-      <TouchableOpacity
-        onPress={this.props.validate}
-        style={{ width: 50 }}>
-        <MaterialIcons name={'check'} color='#31a108' size={30} style={{paddingRight: 20}}/>
-      </TouchableOpacity>
-    )
+    const rightIcon = this.props.rightIcon || (this.props.validate==null
+                                              ? <View style={{ width: 50 }}/>
+                                              : <TouchableOpacity
+                                                  onPress={this.props.validate}
+                                                  style={{ width: 50 }}
+                                                >
+                                                  <MaterialIcons
+                                                  name={'check'}
+                                                  color='#31a108'
+                                                  size={30}
+                                                  style={{paddingRight: 20}}
+                                                />
+                                                </TouchableOpacity>
+                                              )
+
+    const leftIcon = this.props.leftIcon || <TouchableOpacity
+                                              onPress={() => {
+                                                this.props.goBack || this.props.close
+                                                ? this.props.navigation.goBack()
+                                                : this.props.navigation.openDrawer()
+                                              }}
+                                              style={{ width: 50 }}
+                                            >
+                                              <MaterialIcons
+                                                name={this.getIconName()}
+                                                color={theme.separator}
+                                                size={30}
+                                                style={{paddingLeft: 20}}
+                                              />
+                                            </TouchableOpacity>
 
     return (
       <View style={{backgroundColor: theme.background, ...styles.container}}>
         <View style={{backgroundColor: theme.foreground, ...styles.navbar}}>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.goBack
-              ? this.props.navigation.goBack()
-              : this.props.navigation.openDrawer()
-            }}
-            style={{ width: 50 }}>
-            <MaterialIcons name={this.props.goBack ? 'arrow-back' : 'menu'} color={theme.separator /*'#777'*/} size={30} style={{paddingLeft: 20}}/>
-          </TouchableOpacity>
+          { leftIcon }
           <View style={{flex: 1, alignItems: 'center'}}>
             <Text style={{fontWeight: 'bold', fontSize: 18, color: theme.title}}>
               { this.props.title }

@@ -1,20 +1,61 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native';
-import Separator from './Separator';
-import { AntDesign as Icon } from '@expo/vector-icons'
-import moment from 'moment';
-import { connect } from 'react-redux';
+import { StyleSheet, View, Text } from 'react-native'
+import Separator from './Separator'
+import { getDepartmentIcon } from '../Screens/ProfileCards/InformationsCard'
+import { Feather as Icon } from '@expo/vector-icons'
+import moment from 'moment'
+import { connect } from 'react-redux'
+
+function RowItem(props) {
+  const { icon, value, iconColor, textColor } = props.item
+
+  return (
+    <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: props.lastItem ? 0 : 5}}>
+      <Icon
+        name={icon}
+        color={iconColor}
+        size={20}
+      />
+      <Text style={{paddingLeft: 3, color: textColor}}> {value}</Text>
+    </View>
+  )
+}
 
 class Announce extends React.Component {
   render() {
-    let theme;
-    const subject = this.props.item.subject.name.charAt(0).toUpperCase() + this.props.item.subject.name.slice(1)
+    let theme = (this.props.themeOverride)
+      ? this.props.themeOverride
+      : this.props.theme
 
-    if (this.props.themeOverride) {
-      theme = this.props.themeOverride;
+    const post = this.props.item
+
+    const subject = post?.subject?.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ')
+    const departmentName = post?.creator?.department?.name
+    const fullCreatorName = (post?.creator?.firstName && post.creator.lastName)
+      ? post.creator.firstName.charAt(0).toUpperCase()
+          + post.creator.firstName.slice(1)
+          + " "
+          + post.creator.lastName.charAt(0).toUpperCase()
+          + post.creator.lastName.slice(1)
+      : undefined
+    var campus = post?.campus || post?.room?.campus
+    if (campus) {
+      campus = campus.charAt(0).toUpperCase() + campus.slice(1)
+    }
+    const startAt = post?.startAt
+    const endAt = post?.endAt
+
+    const content = []
+    if (post.type=='eleve') {
+      fullCreatorName && content.push({ icon: 'user', value: fullCreatorName, iconColor: theme.eleve, textColor: theme.subtitle})
+      departmentName && content.push({ icon: getDepartmentIcon(departmentName), value: departmentName.toUpperCase(), iconColor: theme.eleve, textColor: theme.subtitle})
+      campus && content.push({ icon: 'home', value: campus, iconColor: theme.eleve, textColor: theme.subtitle})
     }
     else {
-      theme = this.props.theme;
+      startAt && content.push({ icon: 'calendar', value: moment(startAt).local().format('dddd LL'), iconColor: theme.tuteur, textColor: theme.subtitle})
+      startAt && endAt && content.push({ icon: 'clock', value: moment(startAt).local().format('LT')+' - '+moment(endAt).local().format('LT'), iconColor: theme.tuteur, textColor: theme.subtitle})
+      fullCreatorName && content.push({ icon: 'user', value: fullCreatorName, iconColor: theme.tuteur, textColor: theme.subtitle})
+      campus && content.push({ icon: 'home', value: campus, iconColor: theme.tuteur, textColor: theme.subtitle})
     }
 
     return (
@@ -26,35 +67,17 @@ class Announce extends React.Component {
         marginRight: 10
       }}>
         <View style={{
-          backgroundColor: this.props.item.type=='eleve'
-            ? theme.eleve
-            : theme.tuteur,
-
+          backgroundColor: post.type=='eleve' ? theme.eleve : theme.tuteur,
           ...styles.announce
         }}>
-        <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
-          <Text style={{paddingLeft: 10, fontWeight: 'bold', color: theme.title}}>{subject}</Text>
-          <Separator backgroundColor={theme.separator}/>
-          <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
-            <Icon
-              name='calendar'
-              color={this.props.item.type=='eleve' ? theme.eleve : theme.tuteur}
-              size={20}
-            />
-            <Text style={{paddingLeft: 3, color: theme.subtitle}}> {moment(this.props.item.date).local().format('dddd LL')}</Text>
+          <View style={{ backgroundColor: theme.foreground, ...styles.container }}>
+            <Text style={{paddingLeft: 10, fontWeight: 'bold', color: theme.title}}>{subject}</Text>
+            <Separator backgroundColor={theme.separator}/>
+            { content.map((item, index) => <RowItem key={'item_'+index} item={item} lastItem={index==content.length-1}/>) }
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Icon
-              name='clockcircleo'
-              color={this.props.item.type=='eleve' ? theme.eleve : theme.tuteur}
-              size={20}
-            />
-            <Text style={{paddingLeft: 3, color: theme.subtitle}}> {moment(this.props.item.date).local().format('LT')} - {moment(this.props.item.endAt).local().format('LT')}</Text>
-          </View>
-        </View>
         </View>
       </View>
-    );
+    )
   }
 }
 
@@ -68,7 +91,7 @@ const styles = StyleSheet.create({
     width: "98.5%",
     padding: 10,
   },
-});
+})
 
 
 const mapStateToProps = (store) => {

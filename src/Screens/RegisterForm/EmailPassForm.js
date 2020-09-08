@@ -39,7 +39,7 @@ class EmailPassForm extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card>
+        <Card style={styles.card}>
           <View style={styles.form}>
             <Text style={styles.infoText}>{this.state.emailError || this.state.passwordError ? "" : "Vous y êtes presque !"}</Text>
             <Input
@@ -89,6 +89,10 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     justifyContent: 'space-around'
+  },
+  card: {
+    marginVertical: '5%',
+    borderRadius: 40,
   },
   form: {
     flex:1,

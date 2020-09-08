@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: 'space-between',
     marginVertical: '5%',
+    borderRadius: 40,
     paddingVertical: 0
   },
   infoText: {

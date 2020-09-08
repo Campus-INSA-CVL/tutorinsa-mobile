@@ -23,7 +23,7 @@ class NameForm extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card>
+        <Card style={styles.card}>
           <View style={styles.form}>
             <Text style={styles.infoText}>Commençons par les présentations</Text>
             <Input
@@ -65,6 +65,10 @@ class NameForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  card: {
+    marginVertical: '5%',
+    borderRadius: 40,
   },
   infoText: {
     alignSelf: 'center',

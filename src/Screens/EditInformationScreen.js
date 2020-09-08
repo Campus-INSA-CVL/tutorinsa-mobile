@@ -89,44 +89,46 @@ class EditInformation extends React.Component {
   constructor(props) {
     super(props);
     const { user, theme } = this.props.route.params;
+    this.roleData = [
+      {'_id': 'eleve', 'name': 'Étudiant'},
+      {'_id': 'tuteur', 'name': 'Tuteur'},
+      {'_id': 'both', 'name': 'Les deux'}
+    ]
+
+    let role = Array.from(user.permissions)
+    if (role.includes('admin')) role.splice(role.indexOf('admin'), 1)
+    if (role.length==1) {
+      role = role.join('')
+    }
+    else {
+      role = 'both'
+    }
 
     this.state = {
       firstName: user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1),
       lastName: user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1),
-      email: user.email,
       password: '',
       confirmPassword: '',
       department: user.department._id,
       year: user.year._id,
+      role
+    }
+
+    this.oldRole = role;
+  }
+
+  _roleToPermissions(newRole, oldPerms) {
+    var newPerms;
+    if (newRole=='both') {
+      return ["eleve", "tuteur"].concat(oldPerms.includes('admin') ? ['admin'] : []);
+    }
+    else {
+      return newRole.split().concat(oldPerms.includes('admin') ? ['admin'] : []);
     }
   }
 
-  // componentDidMount() {
-  //   if (this.props.yearsData == null) {
-  //     client.service('years').find()
-  //           .then((data) => {
-  //             this.props.dispatch({ type: "API_YEARS", value: data });
-  //           })
-  //           .catch((e) => {
-  //             this.props.dispatch({ type: "API_YEARS", value: {} });
-  //             handleAllErrors(e, () => {this.componentDidMount()});
-  //           });
-  //   }
-  //
-  //   if (this.props.departmentsData == null) {
-  //     client.service('departments').find()
-  //           .then((data) => {
-  //             this.props.dispatch({ type: "API_DEPARTMENTS", value: data });
-  //           }).catch((e) => {
-  //             this.props.dispatch({ type: "API_DEPARTMENTS", value: {} })
-  //             handleAllErrors(e, () => {this.componentDidMount()});
-  //           });
-  //   }
-  // }
-
   _submit(user) {
     var patchedUser = {}
-
     var ok = true;
 
     if (this.state.firstName.toLowerCase() != user.firstName) {
@@ -140,6 +142,9 @@ class EditInformation extends React.Component {
     }
     if (this.state.year != user.year._id) {
       patchedUser["yearId"] = this.state.year;
+    }
+    if (this.state.role != this.oldRole) {
+      patchedUser["permissions"] = this._roleToPermissions(this.state.role, user.permissions);
     }
 
     if (this.state.password != '') {
@@ -175,23 +180,6 @@ class EditInformation extends React.Component {
       }
     }
 
-    if (this.state.email != user.email) {
-      if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@insa-cvl\.fr$/.test(this.state.email)) {
-        patchedUser["email"] = this.state.email;
-      }
-      else {
-        ok = false;
-        Alert.alert(
-          'Erreur',
-          "L'adresse email entrée n'est pas une adresse @insa-cvl.fr valide.",
-          [
-            { text: "D'accord" },
-          ]
-        );
-      }
-    }
-
-
     if (ok) {
       client.service('users')
             .patch(user._id, patchedUser)
@@ -205,6 +193,8 @@ class EditInformation extends React.Component {
 
   render() {
     const { user, theme } = this.props.route.params;
+    const roleString = user.permissions[0].charAt(0).toUpperCase() + (user.permissions.slice(0, -1).join(', ') + (user.permissions.length>1?' et ':'') + user.permissions[user.permissions.length-1]).slice(1)
+
     return (
       <NavBar
         navigation={this.props.navigation}
@@ -238,22 +228,6 @@ class EditInformation extends React.Component {
                 style={{color: theme.text, ...styles.input}}
                 value={this.state.lastName}
                 onChangeText={text => this.setState({lastName: text})}
-              />
-            </View>
-          </InformationItem>
-          <InformationItem
-            name='Email'
-            value={user.email}
-            icon='mail'
-            theme={theme}
-            childHeight={50}
-          >
-            <View style={styles.inputContainer}>
-              <Text style={{color: theme.text, ...styles.inputLabel}}>Nouvel email</Text>
-              <TextInput
-                style={{color: theme.text, ...styles.input}}
-                value={this.state.email}
-                onChangeText={text => this.setState({email: text})}
               />
             </View>
           </InformationItem>
@@ -314,6 +288,24 @@ class EditInformation extends React.Component {
                 selectedValue={this.state.year}
                 onValueChange={(value) => this.setState({year: value})}
                 data={this.props.yearsData}
+                theme={theme}
+                hideStatusBar={false}
+              />
+            </View>
+          </InformationItem>
+          <InformationItem
+            name='Rôle'
+            value={roleString}
+            icon='briefcase'
+            theme={theme}
+            childHeight={50}
+          >
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: theme.text, ...styles.inputLabel}}>Vous êtes </Text>
+              <Picker
+                selectedValue={this.state.role}
+                onValueChange={(value) => this.setState({role: value})}
+                data={this.roleData}
                 theme={theme}
                 hideStatusBar={false}
               />

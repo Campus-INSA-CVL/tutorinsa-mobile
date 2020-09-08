@@ -25,7 +25,7 @@ class ConfirmInscription extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card>
+        <Card style={styles.card}>
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: '5%'}}>
             <Icon name='check' color='#00ae00' size={100}/>
             <Text style={{fontSize:20, paddingTop:10, fontWeight: 'bold'}}>Bienvenue {this.props.route.params.firstName} !</Text>
@@ -64,6 +64,10 @@ class ConfirmInscription extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
+  },
+  card: {
+    marginVertical: '5%',
+    borderRadius: 40,
   },
   nextButton: {
     paddingVertical: 10,

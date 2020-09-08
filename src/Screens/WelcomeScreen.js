@@ -17,6 +17,7 @@ class WelcomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
+              this.props.dispatch({ type: "STEPPER_SET", value: 0});
               this.props.navigation.navigate("Register");
             }}
           >

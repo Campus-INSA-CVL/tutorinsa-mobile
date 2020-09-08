@@ -5,9 +5,7 @@ import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@feathersjs/authentication-client';
 
-// const API_URL = 'https://tutorinsa-server.herokuapp.com';
-const API_URL = 'http://192.168.43.10:3030';
-// const API_URL = 'http://192.168.1.88:3030';
+const API_URL = 'https://tutorinsa-server.azurewebsites.net';
 
 const socket = io(API_URL);
 const client = feathers();
@@ -19,9 +17,12 @@ client.configure(socketio(socket))
 
 export default client
 
+
 export function handleAllErrors(e, retry, onTokenExpired, hasToken) {
 
   console.log('Error catched : '+e.name);
+  // console.error(e);
+
   if (e.name == "Timeout") {
     Alert.alert(
       'Erreur',
@@ -55,10 +56,54 @@ export function handleAllErrors(e, retry, onTokenExpired, hasToken) {
   else {
     Alert.alert(
       'Erreur',
-      'Veuillez consulter la console pour plus de détails.',
+      'Si cette erreur persiste veuillez contacter le développeur.',
       [
         {text: "D'accord"},
       ]
     );
   }
+}
+
+
+export function fetchAPI(service, query) {
+  return new Promise(resolve => {
+    var response = []
+
+    client.service(service)
+    .find({
+      query : {
+        ...query
+      }
+    })
+    .then((data) => {
+      if (Array.isArray(data)) {
+        resolve(data)
+      }
+      else {
+        if (data.total==0) {
+          resolve([])
+        }
+        else {
+          for (var i=0; i*data.limit<data.total; i++) {
+            client.service(service)
+            .find({
+              query: {
+                $skip: i*data.limit,
+                ...query
+              }
+            })
+            .then((res) => {
+              res.data.forEach((item, i) => {
+                response.push(item)
+              });
+
+              if (response.length == data.total) {
+                resolve(response)
+              }
+            })
+          }
+        }
+      }
+    })
+  })
 }

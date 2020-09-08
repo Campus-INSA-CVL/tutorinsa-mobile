@@ -63,10 +63,18 @@ class ThemesCard extends React.Component {
                 </View>
                 <Announce
                   item={{
-                    date: "2020-03-16T18:00:00.000Z",
-                    endAt: "2020-03-16T19:00:00.000Z",
+                    date: new Date(),
+                    endAt: new Date().setHours(new Date().getHours()+1),
                     subject: {
-                      name: "Résistance Des Matériaux",
+                      name: "Matière à étudier",
+                    },
+                    creator: {
+                      firstName: 'Prénom',
+                      lastName: 'Nom',
+                    },
+                    room: {
+                      name: 'Salle',
+                      campus: 'Campus'
                     },
                     type: "tuteur",
                   }}

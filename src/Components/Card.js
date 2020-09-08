@@ -27,8 +27,10 @@ Card.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: '10%',
+    alignSelf: 'center',
+    width: '85%',
     padding: '5%',
-    borderRadius: 20,
+    borderRadius: 10,
+    elevation: 2,
   },
 });

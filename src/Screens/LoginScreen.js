@@ -68,7 +68,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card style={styles.content} onFocus={() => {this.loadAsyncData()}}>
+        <Card style={styles.card} onFocus={() => {this.loadAsyncData()}}>
           <KeyboardAvoidingView
           style={styles.form}
           behavior="height"
@@ -134,10 +134,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 24
   },
-  content: {
-    width: '85%',
+  card: {
+    borderRadius: 40,
     marginVertical: '15%',
-    flex: 1,
   },
   form:{
     flex: 4,
