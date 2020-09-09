@@ -65,6 +65,7 @@ function _setupItems(user, theme, customUser) {
     data = [
       fullName && { name: 'Nom', value: fullName, icon: 'user' },
       user?.email && { name: 'Email', value: user.email, icon: 'mail' },
+      user?.email && { name: 'Mot de passe', value: '********', icon: 'lock' },
       user?.department?.name && { name: 'Département', value: user.department.name.toUpperCase(), icon: getDepartmentIcon(user.department.name) },
       user?.year?.name && { name: 'Année', value: user.year.name.toUpperCase(), icon: 'award' },
       roleString && { name: user.permissions.length>1?'Rôles':'Rôle', value: roleString, icon: 'briefcase' },
@@ -120,7 +121,7 @@ function InformationsCard(props) {
   const informationsItems = _setupItems(user, theme, customUser);
 
   if (informationsItems.length == 0) return null
-  
+
   return (
     <Card theme={theme} style={{...styles.container, ...props.style}}>
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>

@@ -244,6 +244,8 @@ class EditInformation extends React.Component {
                 style={{color: theme.text, ...styles.input}}
                 value={this.state.password}
                 onChangeText={text => this.setState({password: text})}
+                autoCapitalize="none"
+                secureTextEntry
               />
             </View>
             <View style={styles.inputContainer}>
@@ -252,6 +254,8 @@ class EditInformation extends React.Component {
                 style={{color: theme.text, ...styles.input}}
                 value={this.state.confirmPassword}
                 onChangeText={text => this.setState({confirmPassword: text})}
+                autoCapitalize="none"
+                secureTextEntry
               />
             </View>
           </InformationItem>
