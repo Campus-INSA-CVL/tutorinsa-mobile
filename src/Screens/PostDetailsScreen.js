@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, ScrollView, Text, View, TouchableOpacity, Alert } from 'react-native'
 import moment from 'moment'
 import { connect } from 'react-redux'
-import { Feather as Icon } from '@expo/vector-icons'
+import { Feather, FontAwesome5 } from '@expo/vector-icons'
 import client from '../feathers-client.js'
 import NavBar from '../Components/NavBar'
 import Card from '../Components/Card'
@@ -13,7 +13,7 @@ function RowItem(props) {
   return (
     <View style={styles.rowItem}>
       <View style={styles.iconContainer}>
-        <Icon
+        <Feather
           name={props.icon}
           color={props.color}
           size={30}
@@ -135,6 +135,34 @@ class PostDetails extends React.Component {
       />
     ))
 
+    var tutorsNames = post?.tutors?.map((item, index) => {
+      if (item?.firstName && item?.lastName) {
+        return (
+          <View
+            key={'tutorName_'+index}
+            style={{
+              alignItems: 'center',
+              borderBottomWidth: index==post.tutors.length-1 ? 0 : 0.2,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingVertical: 20,
+                height: 30,
+                width: '75%',
+                alignItems: 'center',
+                flex: 1,
+              }}
+            >
+              <FontAwesome5 name='user-graduate' size={25} style={{marginRight: 'auto'}} color={theme.tuteur}/>
+              <Text>{item.firstName.charAt(0).toUpperCase() + item.firstName.slice(1) + " " + item.lastName.charAt(0).toUpperCase() + item.lastName.slice(1)}</Text>
+            </View>
+          </View>
+        )
+      }
+    })
+
     return (
       <NavBar navigation={this.props.navigation} title="Détails de l'annonce" goBack>
         <ScrollView contentContainerStyle={{backgroundColor: theme.background, ...styles.container}}>
@@ -182,7 +210,7 @@ class PostDetails extends React.Component {
                                   {post.studentsIds.includes(user._id) ? "Inscrit" : post.studentsIds.length/post.studentsCapacity==1 ? "Complet !" : "S'inscrire"}
                                 </Text>
                                 {
-                                  post.studentsIds.includes(user._id) && <Icon name='check' size={20} color={theme.buttonLabel}/>
+                                  post.studentsIds.includes(user._id) && <Feather name='check' size={20} color={theme.buttonLabel}/>
                                 }
                               </View>
                             </TouchableOpacity>
@@ -210,7 +238,7 @@ class PostDetails extends React.Component {
                                   {post.tutorsIds.includes(user._id) ? "Inscrit" : post.tutorsIds.length/post.tutorsCapacity==1 ? "Complet !" : "S'inscrire"}
                                 </Text>
                                 {
-                                  post.tutorsIds.includes(user._id) && <Icon name='check' size={20} color={theme.buttonLabel}/>
+                                  post.tutorsIds.includes(user._id) && <Feather name='check' size={20} color={theme.buttonLabel}/>
                                 }
                               </View>
                             </TouchableOpacity>
@@ -222,10 +250,12 @@ class PostDetails extends React.Component {
 
                 </View>
                 {
-                  post.tutors && (
-                    null
+                  tutorsNames?.length > 0 && (
+                    <View>
+                      <Text style={styles.tuteursInscrits(theme)}>Tuteurs inscrits</Text>
+                      { tutorsNames }
+                    </View>
                   )
-                  //// TODO: List all tutors names here ////
                 }
               </Card>
             )
@@ -316,6 +346,13 @@ const styles = StyleSheet.create({
     color: theme.buttonLabel,
     fontWeight: 'bold',
     paddingHorizontal: 10
+  }),
+  tuteursInscrits: (theme) => ({
+    fontWeight: 'bold',
+    color: theme.tuteur,
+    alignSelf: 'center',
+    fontSize: 17,
+    paddingVertical: 15
   })
 })
 
