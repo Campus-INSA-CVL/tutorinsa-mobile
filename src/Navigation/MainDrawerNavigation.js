@@ -1,23 +1,25 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react'
+import { Image } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-} from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
-import { SlideFromRightTransition, PresentTransition } from './Transitions';
+} from '@react-navigation/drawer'
+import { createStackNavigator } from '@react-navigation/stack'
+import { SlideFromRightTransition, PresentTransition } from './Transitions'
+import { AntDesign as Icon } from '@expo/vector-icons'
 
-import Posts from '../Screens/PostsScreen';
-import PostDetails from '../Screens/PostDetailsScreen';
-import NewPostScreen from '../Screens/NewPostScreen';
-import FilterPostsScreen from '../Screens/FilterPostsScreen';
-import Profile from '../Screens/ProfileScreen';
-import EditInformation from '../Screens/EditInformationScreen';
-import EditFavoriteSubjects from '../Screens/EditFavoriteSubjectsScreen';
-import EditDifficultSubjects from '../Screens/EditDifficultSubjectsScreen';
+import Posts from '../Screens/PostsScreen'
+import PostDetails from '../Screens/PostDetailsScreen'
+import NewPostScreen from '../Screens/NewPostScreen'
+import FilterPostsScreen from '../Screens/FilterPostsScreen'
+import Profile from '../Screens/ProfileScreen'
+import EditInformation from '../Screens/EditInformationScreen'
+import EditFavoriteSubjects from '../Screens/EditFavoriteSubjectsScreen'
+import EditDifficultSubjects from '../Screens/EditDifficultSubjectsScreen'
 
-const PostsStack = createStackNavigator();
+const PostsStack = createStackNavigator()
 function PostsNavigator() {
   return (
     <PostsStack.Navigator
@@ -56,11 +58,11 @@ function PostsNavigator() {
         }}
       />
     </PostsStack.Navigator>
-  );
+  )
 }
 
 
-const ProfileStack = createStackNavigator();
+const ProfileStack = createStackNavigator()
 function ProfileNavigator() {
   return (
     <ProfileStack.Navigator
@@ -101,17 +103,17 @@ function ProfileNavigator() {
         }}
       />
     </ProfileStack.Navigator>
-  );
+  )
 }
 
 
 
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator()
 
 class MainDrawerNavigation extends React.Component {
   render() {
-    const { theme } = this.props;
+    const { theme } = this.props
 
     return (
       <NavigationContainer>
@@ -119,6 +121,11 @@ class MainDrawerNavigation extends React.Component {
           initialRouteName="Posts"
           drawerContent={(props) => {return (
             <DrawerContentScrollView {...props} style={{backgroundColor: theme.foreground}}>
+              <Image
+                source={require('../../assets/header.png')}
+                style={{width: '100%'}}
+                resizeMode='contain'
+              />
               <DrawerItemList
                 {...props}
                 labelStyle={{
@@ -134,6 +141,7 @@ class MainDrawerNavigation extends React.Component {
             name="Posts"
             options={{
               title: "Posts",
+              drawerIcon: () => <Icon name='appstore-o' size={32} color={theme.title}/>
             }}
             component={PostsNavigator}
           />
@@ -141,12 +149,13 @@ class MainDrawerNavigation extends React.Component {
             name="Profile"
             options={{
               title: "Mon profil",
+              drawerIcon: () => <Icon name='idcard' size={32} color={theme.title}/>
             }}
             component={ProfileNavigator}
           />
         </Drawer.Navigator>
       </NavigationContainer>
-    );
+    )
   }
 }
 

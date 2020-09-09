@@ -8,10 +8,10 @@ const LIGHT = {
   title: '#000000',
   subtitle: '#999999',
   text: '#000000',
-  button: '#4e73df',
+  button: '#486dda',
   buttonLabel: '#ffffff',
   eleve: '#1cc88a',
-  tuteur: '#4e73df',
+  tuteur: '#486dda',
   statusbarMode: 'dark-content',
 }
 
@@ -23,10 +23,10 @@ const BROWN = {
   title: '#d4ebff',
   subtitle: '#7c898b',
   text: '#93a3b1',
-  button: '#4e73df',
+  button: '#486dda',
   buttonLabel: '#ffffff',
   eleve: '#1cc88a',
-  tuteur: '#4e73df',
+  tuteur: '#486dda',
   statusbarMode: 'light-content',
 }
 
@@ -38,10 +38,10 @@ const DARK = {
   title: '#ffffff',
   subtitle: '#8a8a8a',
   text: '#ffffff',
-  button: '#4e73df',
+  button: '#486dda',
   buttonLabel: '#ffffff',
   eleve: '#1cc88a',
-  tuteur: '#4e73df',
+  tuteur: '#486dda',
   statusbarMode: 'light-content',
 }
 
@@ -53,10 +53,10 @@ const BLUE = {
   title: '#ffffff',
   subtitle: '#8a8a8a',
   text: '#ffffff',
-  button: '#4e73df',
+  button: '#486dda',
   buttonLabel: '#ffffff',
   eleve: '#1cc88a',
-  tuteur: '#4e73df',
+  tuteur: '#486dda',
   statusbarMode: 'light-content'
 }
 
