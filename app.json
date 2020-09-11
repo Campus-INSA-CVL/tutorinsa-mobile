@@ -1,19 +1,18 @@
 {
   "expo": {
-    "name": "TutorInsa",
+    "name": "TutorINSA",
     "slug": "tutorinsa",
     "privacy": "public",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -22,6 +21,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "org.insa_cvl.tutorinsa",
+      "versionCode": 1
+    },
     "ios": {
       "supportsTablet": true
     }

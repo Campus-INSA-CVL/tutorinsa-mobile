@@ -44,6 +44,13 @@ export function handleAllErrors(e, retry, onTokenExpired, hasToken) {
         : [ { text: "D'accord", onPress: () => {onTokenExpired()} }, ]
     );
   }
+  else if (e.name == "Forbidden") {
+    Alert.alert(
+      'Erreur',
+      'Veuillez confirmer votre adresse mail en cliquant sur le lien que vous avez reçu par mail avant de vous connecter.',
+      [ { text: "D'accord" }, ]
+    );
+  }
   else if (e.name == "BadRequest") {
     Alert.alert(
       'Erreur',

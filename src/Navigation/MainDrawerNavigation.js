@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image } from 'react-native'
+import { Image, View, Dimensions } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   createDrawerNavigator,
@@ -121,11 +121,13 @@ class MainDrawerNavigation extends React.Component {
           initialRouteName="Posts"
           drawerContent={(props) => {return (
             <DrawerContentScrollView {...props} style={{backgroundColor: theme.foreground}}>
-              <Image
-                source={require('../../assets/header.png')}
-                style={{width: '100%'}}
-                resizeMode='contain'
-              />
+              <View style={{height: Dimensions.get('window').height/4, alignItems: 'center', justifyContent: 'center'}}>
+                <Image
+                  source={require('../../assets/icon_512x512.png')}
+                  style={{width: '50%'}}
+                  resizeMode='contain'
+                />
+              </View>
               <DrawerItemList
                 {...props}
                 labelStyle={{
