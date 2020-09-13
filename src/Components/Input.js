@@ -3,16 +3,25 @@ import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 
 class Input extends React.Component {
+  focus() {
+    console.log(this.input);
+    this.input.focus();
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TextInput
+          ref={(input) => {this.input = input}}
           style={styles.inputStyle}
           {...this.props}
         />
         {
           (this.props.value)
-          ? <TouchableOpacity onPress={() => {this.props.onChangeText('')}}>
+          ? <TouchableOpacity onPress={() => {
+              this.props.onChangeText('')
+              this.focus()
+            }}>
               <Icon name='x' size={25} color='#555' style={{marginLeft: 'auto'}}/>
             </TouchableOpacity>
           : null
