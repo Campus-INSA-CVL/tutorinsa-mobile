@@ -1,6 +1,8 @@
 # tutorinsa-mobile
 
-## About
+This projects is a mobile application for TutorINSA, a tutoring platform for INSA Centre-Val de Loire's students.
+
+## Frameworks
 
 This project uses [React Native](https://reactnative.dev/), an open-source mobile application framework created by Facebook, alongside with [Expo](https://expo.io/).
 
